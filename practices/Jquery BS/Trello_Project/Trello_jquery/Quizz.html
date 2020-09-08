@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css'>
+
+
+
+
+    <title>Quizzes</title>
+
+    <!-- STYLESHEETS -->
+    <!-- css / materialized website -->
+    <!-- http://www.materializecss.com/getting-started.html -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+    <style>
+        body {
+            background: url('img/christmas-dark/christmas-dark.png');
+            min-height: 100%;
+            background-size: fixed;
+        }
+
+        .container {
+            width: 450px;
+        }
+
+        .Qname {
+            float: left;
+            width: auto;
+            margin-left: 200px;
+        }
+
+        .QA {
+            float: right;
+            width: auto;
+            margin-right: 200px;
+        }
+
+        .quizzes {
+            margin-top: 800px;
+            float: center
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navi -->
+    <nav>
+        <div class="nav-wrapper grey lighten-2">
+            <a class="brand-logo teal-text">Logo</a>
+
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li>
+                    <a class="dropdown-button waves-effect waves-light teal-text" data-activates="dropdown1">
+                        My Quizz
+                        <i class="material-icons right teal-text">arrow_drop_down</i>
+                    </a>
+                </li>
+                <li>
+                    <a class="waves-effect waves-light teal-text" href="FAQ.html">My FAQ's</a>
+                </li>
+                <li>
+                    <a class="cmdLogout waves-effect waves-light teal-text">Logout</a>
+                </li>
+            </ul>
+
+            <ul id="dropdown1" class="dropdown-content">
+                <li>
+                    <a class="teal-text" href="#!">Quiz one</a>
+                </li>
+                <li>
+                    <a class="teal-text" href="#!">Quiz two</a>
+                </li>
+                <!-- Modal Trigger -->
+                <li>
+                    <a class="teal-text waves-effect waves-light modal-trigger" href="#modal1">Create Quiz</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <!-------------------------------------- Create Quiz Name -------------------------------------->
+    <form class='container Qname col s6'>
+        <div class="card grey lighten-2">
+
+            <div class="card-content teal-text">
+                <h3>Quiz Name</h3>
+
+                <div class=createQuiz>
+                    <div class="row">
+                        <div class="input-field col s8">
+                            <input value=" " id="QuizName" type="text">
+                            <label class="active" for="first_name2">Quiz Name</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select id="defAnswer">
+                                <option value="" disabled selected>Default Answer</option>
+                                <option value="single">Single</option>
+                                <option value="multiple">Multiple</option>
+                                <option value="open">Open</option>
+                            </select>
+                            <label>Default Answer</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <p>
+                            <input type="checkbox" id="randQuest" />
+                            <label for="randQuest">Randomize Questions</label>
+                        </p>
+                    </div>
+
+                    <div class="row">
+                        <p>
+                            <input type="checkbox" id="randAnswer" />
+                            <label for="randAnswer">Randomize Answers</label>
+                        </p>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s8">
+                            <input value=" " id="empID" type="text" disabled>
+                            <label class="active" for="first_name2">Employer ID</label>
+                        </div>
+                    </div>
+
+                    <div class="btnQname">
+                        <button id='cmdCreate' class="waves-effect waves-light btn">Create Quiz</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-------------------------------------- Create Quiz QA -------------------------------------->
+
+    <form class='container QA'>
+        <div class="card grey lighten-2">
+            <div class="card-content teal-text">
+                <h3>Quiz Questions</h3>
+
+                <div class="row">
+                    <div class="input-field col s8">
+                        <input value=" " id="quizid" type="text" disabled>
+                        <label class="active" for="first_name2">Quiz ID</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input value=" " class="questions" type="text">
+                        <label class="active" for="first_name2">Quesitons</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <select id="answerType">
+                            <option value="" disabled selected>Answer Type</option>
+                            <option value="single" id="SAnswer">Single</option>
+                            <option value="multiple" id="MAnswer">Multiple</option>
+                            <option value="open" id="openAnswer">Open</option>
+                        </select>
+                        <label>Default Answer</label>
+                    </div>
+                </div>
+
+                <div id='singleanswer' class="row">
+                    <div class="input-field col s6">
+                        <input value=" " class="answer" type="text">
+                        <label class="active" for="first_name2">Answer</label>
+                    </div>
+                </div>
+
+                <div id='openanswer' class="row">
+                    <div class="input-field col s6">
+                        <input value=" " class="openAnswer" type="text">
+                        <label class="active" for="first_name2">Open Answer</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input value=" " class="media" type="text">
+                        <label class="active" for="first_name2">Media (Optional) </label>
+                    </div>
+                </div>
+
+                <div class="btnQA">
+                    <button id='cmdCreateAnsw' class="waves-effect waves-light btn">Create Questions</button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+
+    <!-------------------------- Createed Quizzes / Edit & Delete  -------------------------->
+
+
+    <form class='quizzes'>
+        <div class="row">
+            <div class="col s12 m6">
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                        <span class="card-title">Quizzes</span>
+                        <p>Quizz Name:
+                            <span></span>
+                        </p>
+                        <p>Quizz Id:
+                            <span></span>
+                        </p>
+                    </div>
+                    <div class="card-action">
+                        <button class="cmdEdit yellow darken-4">Edit</button>
+                        <button class="cmdDelete red accent-4">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+
+    <script type="text/javascript">
+        let employID = null;
+
+        sabio.page.startUp = () => {
+
+            sabio.page.handlers.dropdown();
+            $('select').material_select();
+            $('.modal').modal();
+
+
+            sabio.page.GetUser(sabio.page.onSuccess, sabio.page.onError);
+            $(document).on("click", ".cmdLogout", sabio.page.handlers.logout);
+            sabio.page.userID(sabio.page.userIDSuccess, sabio.page.onError);
+            $('#cmdCreate').on('click', sabio.page.handlers.createQuiz);
+
+            //sabio.page.handlers.answerType();
+            $('#cmdCreateAnsw').on('click', sabio.page.handlers.createAnswer);
+
+
+            
+        };
+
+        /****************************************** Handler ******************************************/
+        sabio.page.handlers.dropdown = () => {
+            console.log("click click!");
+            $('.dropdown-button').dropdown('closed');
+        };
+
+        sabio.page.handlers.logout = (event) => {
+            event.preventDefault();
+            sabio.page.loggingout(sabio.page.logoutSuccess, sabio.page.onError);
+        };
+
+        sabio.page.handlers.createQuiz = (event) => {
+            event.preventDefault();
+            const data = sabio.page.registerQuiz();
+            sabio.page.crtQuiz(data, sabio.page.createSuccess, sabio.page.onQuizError);
+        };
+
+        /*
+        sabio.page.handlers.answerType = function () {
+            $("#answerType").change(function () {
+                $('#answerType' + 'option:selected').each(function () {
+                    if ($(this).attr("id") == "SAnswer") {
+                        $(".singleanswer").show();
+                    }
+                    else {
+                        $(".openanswer").hide();
+                    }
+                });
+            }).change();
+        }
+        */
+
+        sabio.page.handlers.createAnswer = (event) => {
+            event.preventDefault();
+            const data = sabio.page.quizQuestData();
+            sabio.page.createQuizAnswer(data, sabio.page.createAnswerSuccess, sabio.page.onQuizError);
+        };
+
+        /****************************************** Other ******************************************/
+        sabio.page.registerQuiz = () => {
+
+            const userQuizz = {
+                QuizName: $("#QuizName").val(),
+                defaultAnswerType: $("#defAnswer").val(),
+                randomizeQuestions: $("#randQuest").is(':checked'),
+                randomizeAnswers: $("#randAnswer").is(':checked'),
+                employerId: $("#empID").val(),
+            }
+            console.log(userQuizz);
+            return userQuizz;
+        };
+
+        //capturing userinput data as an object
+        sabio.page.quizQuestData = () => {
+            const quizzQA = {
+                quizId: $('#quizid').val(),
+                question: $(".questions").val(),
+                answerType: $("#answerType").val(),
+                answers: [{
+                    answer: $(".answer").val(),
+                    isCorrect: true,
+                    sortOrder: 2,
+                }],
+                openAnswer: $(".openAnswer").val(),
+                media: $(".media").val(),
+            }
+            console.log(quizzQA);
+            return quizzQA;
+        };
+
+
+        /****************************************** Ajax ******************************************/
+
+        sabio.page.GetUser = (onSuccess, onError) => {
+            const url = "https://pacoima-ypi.azurewebsites.net/api/people/currentuser";
+
+            const settings = {
+                cache: false,
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                dataType: "json",
+                type: "GET",
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: onSuccess,
+                error: onError
+            };
+            $.ajax(url, settings);
+        };
+
+        sabio.page.loggingout = (onSuccess, onError) => {
+            const url = "https://pacoima-ypi.azurewebsites.net/api/users/logout";
+
+            const settings = {
+                cache: false,
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                dataType: "json",
+                xhrFields: {
+                    withCredentials: true
+                },
+                type: "GET",
+                success: onSuccess,
+                error: onError
+            };
+            $.ajax(url, settings);
+        };
+
+        sabio.page.userID = (onSuccess, onError) => {
+            const url = "https://pacoima-ypi.azurewebsites.net/api/users/ids";
+
+            const settings = {
+                cache: false,
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                dataType: "json",
+                xhrFields: {
+                    withCredentials: true
+                },
+                type: "GET",
+                success: onSuccess,
+                error: onError
+            };
+            $.ajax(url, settings);
+        };
+
+        sabio.page.crtQuiz = (data, onSuccess, onError) => {
+            const url = "https://pacoima-ypi.azurewebsites.net/api/quizzes/";
+
+            const settings = {
+                cache: false,
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                data: data,
+                dataType: "json",
+                xhrFields: {
+                    withCredentials: true
+                },
+                type: "POST",
+                success: onSuccess,
+                error: onError
+            };
+            $.ajax(url, settings);
+        };
+
+
+        sabio.page.createQuizAnswer = (data, onSuccess, onError) => {
+            const url = "https://pacoima-ypi.azurewebsites.net/api/quizzes/questions";
+
+            const settings = {
+                cache: false,
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                data: data,
+                dataType: "json",
+                xhrFields: {
+                    withCredentials: true
+                },
+                type: "POST",
+                success: onSuccess,
+                error: onError
+            };
+            $.ajax(url, settings);
+        };
+
+        sabio.page.allQuizzes = (id, onSuccess, onError) => {
+            const url = "https://pacoima-ypi.azurewebsites.net/api/quizzes/employer/" + employID;
+
+            const settings = {
+                cache: false,
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                dataType: "json",
+                xhrFields: {
+                    withCredentials: true
+                },
+                type: "GET",
+                success: onSuccess,
+                error: onError
+            };
+            $.ajax(url, settings);
+        };
+
+        /****************************************** Call Back /******************************************/
+        sabio.page.onError = () => {
+            console.log(data, error);
+            console.log("Too Bad!! Error! :(");
+            window.location.replace("login.html");
+        };
+
+        sabio.page.userIDSuccess = (data) => {
+            console.log(data);
+            employID = data.item.employerId;
+            console.log('employee ID is ' + employID);
+            $("#empID").val(employID);
+            sabio.page.allQuizzes(employID, sabio.page.getallQuizzes, sabio.page.onError);
+        };
+
+        sabio.page.createSuccess = (data) => {
+            console.log('Quiz is created');
+            const newquizid = data.item
+            console.log('quiz id is ' + newquizid);
+            $("#quizid").val(newquizid);
+        };
+
+        sabio.page.onQuizError = (data, error) => {
+            console.log('cant create quiz: ERROR');
+            console.log(data, error);
+        };
+
+        sabio.page.createAnswerSuccess = () => {
+            console.log('answer was created');
+            $(".QA")[0].reset();
+            $(".Qname")[0].reset();
+        };
+
+        sabio.page.getallQuizzes = (data) => {
+            console.log('so many...')
+            
+        };
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Geocode Map</title>
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+    <script>
+        let addObj = {
+            address1: "25667 Carnation Run",
+            address2: null,
+            city: "Westlake",
+            state: "OH",
+            zip: "44145",
+            key: "AIzaSyBhX1J4CXc5sf99k3Enl57XO2VBY9mdpKQ"
+        }
+        sabio.page.startUp = () => {
+            sabio.page.getGeocode(addObj, sabio.page.onGetGeocodeSuccess, sabio.page.onError);
+        }
+
+        sabio.page.getGeocode = (location, onSuccess, onError) => {
+            let url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + location.address1 + location.city + location.state + location.zip + "&key=" + location.key;
+            let settings = {
+                cache: false,
+                success: onSuccess,
+                error: onError,
+                type: "GET"
+            };
+            $.ajax(url, settings);
+        }
+
+        sabio.page.onGetGeocodeSuccess = (data) => {
+            console.log(data.results[0].geometry.location);
+        }
+
+        sabio.page.onError = (status) => {
+            console.log(status);
+        }
+
+
+        
+    </script>
+</body>
+</html>

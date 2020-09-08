@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+</head>
+
+<body>
+    <h1> The Recipe Card</h1>
+    <form class="TheReceipe col-md-6 col-sm-12">
+        <div class="form-group">
+            <label> Title</label>
+            <input type="text"
+                   class="form-control"
+                   id="title"
+                   placeholder="Title">
+        </div>
+        <div class="form-group">
+            <label >Servings</label>
+            <input type="number"
+                   class="form-control"
+                   id="servings"
+                   placeholder="Servings">
+        </div>
+        <div class="form-group moreIngre">
+            <label> Ingredients</label>
+            <input type="text"
+                   class="form-control"
+                   id="ingredients"
+                   placeholder="Ingredients">
+        </div>
+
+        <input type="button" value="Add Ingredients" class="btnAdd btn btn-info">
+        <input type="button" value="Add Receipe" class="btnAddRec btn btn-success">
+    </form>
+      <!-- Receipe START -->
+      <div id="yours" class="col-md-12 listings">
+        <div class="userReceipe listing-row">
+            <div class="row col-sm-10">
+                <h3 class="user-receipe">Your Recipe Card</h3>
+            </div>
+        </div>
+      </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+                      <!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+<script type="text/javascript">
+
+sabio.page.startUp = function() {
+
+$(".btnAdd").on("click", sabio.page.handlers.btnAddIngredidents);
+$(".btnAddRec").on("click", sabio.page.handlers.btnAddRecipe);
+$(".userReceipe").on("click", ".cmdreceipeDelete", sabio.page.handlers.btnDelete);
+$(".moreIngre").on("click", ".cmdingredientsDelete", sabio.page.handlers.ingredientsDelete);
+
+}
+
+//capturing user input data
+sabio.page.userInput = function(){
+  var userInput = {
+    Title: $("#title").val(),
+    Servings: $("#servings").val(),
+    Ingredients: $("#ingredients").val()
+  }
+  return userInput;
+};
+
+//creating new template
+sabio.page.newTemp = function (){
+  var newTemplate = $($("#newTemplate").html());
+  return newTemplate;
+}
+
+//user input data will display on new template
+sabio.page.loadTemplate = function(data){
+  //user input template is loaded
+  var template = sabio.page.newTemp();
+  //assigning user input data to new template format
+  template.find(".userTitle > strong").text(data.Title);
+  template.find(".userServing > span").text(data.Servings);
+  template.find(".userIngred > span").text(data.Ingredients);
+  $(".userReceipe").append(template);
+}
+
+
+//adding ingredients
+//i need help here
+sabio.page.handlers.btnAddRecipe = function (event){
+  event.preventDefault();
+  var data = sabio.page.userInput();
+  sabio.page.loadTemplate(data);
+  sabio.page.resetForm();
+}
+
+//loading new ingredients input
+sabio.page.addIngredient = function(){
+var ingreTemplate = $($("#ingredientsTemplate").html());
+return ingreTemplate;
+}
+
+sabio.page.handlers.btnAddIngredidents = function(){
+  event.preventDefault();
+  var newIngre = sabio.page.addIngredient();
+
+  
+  $(".moreIngre").append(newIngre);
+
+
+}
+
+
+/*
+//trying to capture new ingreidents user input
+sabio.page.additionalIngredi = function(){
+
+
+}
+*/
+
+sabio.page.handlers.ingredientsDelete = function (){
+  $(this).closest(".newIngredietns").remove();;
+}
+
+//delete button for the receipe user added
+sabio.page.handlers.btnDelete = function (){
+  $(this).closest(".newReceipe").remove();
+}
+
+sabio.page.resetForm = function(){
+  $(".TheReceipe")[0].reset();
+
+}
+
+</script>
+
+</body>
+
+
+<!-- adding ingredients -->
+<script type="text/template" id="ingredientsTemplate">
+
+<div class="newIngredietns">
+  <div class="form-group">
+  <p></p>
+      <label> Ingredients</label>
+      <input type="text"
+             class="form-control"
+             id="addIngredi"
+             placeholder="Ingredients">
+      <input type="button" value="Delete" class="cmdingredientsDelete btn btn-danger">
+  </div>
+</div>
+
+</script>
+
+<!-- new template -->
+<script type="text/template" id="newTemplate">
+
+<div class="newReceipe">
+  <div class="listing-row">
+      <div class="row col-sm-10">
+      <p></p>
+          <h4 class="userTitle">  <strong></strong></h4>
+          <p class="userServing"> Servings: <span></span></p>
+          <p class="userIngred"> Ingredients: <span></span></p>
+          <input type="button" value="delete" class="cmdreceipeDelete btn btn-danger">
+      <p></p>
+      </div>
+  </div>
+</div>
+
+
+</script>
+</html>
+
+
+
+<!--
+var car = {
+  make: "honda",
+  model: "civic",
+  insurance: false
+}
+
+var cars = [];
+
+cars.push(car);
+
+var car2 =
+{
+car2.make = "honda";
+car2.model = "accord";
+car2.insurance = true;
+}
+
+cars.push(car2);
+
+for (i = 0; i<car.length; i++){
+  console.log(car[i].make + car[i].model + car[i].insurance);
+
+}
+
+var write = function (x){
+  x.id=Math.ceil(Math.random() * 100;
+  return data;
+}
+
+-->

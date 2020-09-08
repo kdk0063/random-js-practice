@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+
+
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css'>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        body {
+            height: 100%;
+            background: white;
+            background: radial-gradient(circle, #fff 20%, #ccc);
+            background-size: cover;
+        }
+
+        h2 {
+            margin-top: 40px;
+        }
+
+        #calculator {
+            width: 360px;
+            height: auto;
+            margin: 100px auto;
+            margin-top: 15px;
+            padding: 20px 20px 20px;
+            background: #D1C5C2;
+            border-radius: 15px;
+            box-shadow: 0px 15px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        #calculator:hover {
+            cursor: pointer;
+        }
+
+        .keys {
+            overflow: hidden;
+            font-size: 26px;
+            font-weight: bold;
+            padding-bottom: 3px;
+        }
+
+        .keys span:hover {
+            background-color: black;
+            color: white;
+        }
+
+        .keys span:active {
+            background-color: black;
+            color: white;
+            box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5);
+        }
+
+        .keys span {
+            float: left;
+            width: 70px;
+            height: 70px;
+            background-color: grey;
+            padding: 18px;
+            margin: 5px;
+            text-align: center;
+            box-shadow: 3px 6px 6px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+
+        span.operator,
+        span.eval {
+            background: #607989;
+        }
+
+        p {
+            padding: 0px;
+            margin: -12px;
+            font-size: 13px;
+            position: relative;
+            bottom: -18px;
+            right: -220px;
+            width: auto;
+            height: auto;
+            font-style: italic;
+        }
+
+        #curr {
+            bottom: -10px;
+            text-align: right;
+            right: 20px;
+            background: none;
+        }
+
+        span.clear {
+            background: #BB7777;
+        }
+
+        .input {
+            float: left;
+            float: left;
+            width: 230px;
+            height: 70px;
+            background: white;
+            padding: 20px;
+            margin: 5px;
+            box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5);
+            text-align: right;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h2 class="text-center">Simple JS Calculator</h2>
+
+    <div id="calculator">
+        <p id="op">-</p>
+        <p id="curr">-</p>
+        <div class="keys">
+            <!--buttons-->
+            <span class="clear">C</span>
+            <input class="input" value="0">
+            <span class="number">7</span>
+            <span class="number">8</span>
+            <span class="number">9</span>
+            <span class="operator">+</span>
+            <span class="number">4</span>
+            <span class="number">5</span>
+            <span class="number">6</span>
+            <span class="operator">-</span>
+            <span class="number">1</span>
+            <span class="number">2</span>
+            <span class="number">3</span>
+            <span class="operator">x</span>
+            <span class="number">0</span>
+            <span class="number">.</span>
+            <span class="eval">=</span>
+            <span class="operator">÷</span>
+        </div>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+
+    <script src="js/index.js"></script>
+    <script>
+        var currentVal = 0;
+        var operator;
+        $(document).ready(function() {
+            $(".number").on("click", numToField);
+            $(".clear").on("click", clearField);
+            $(".operator").on("click", opToField);
+            $(".eval").on("click", parse);
+        });
+
+        function numToField() {
+            if ($('.input').val() === "0") {
+                $('.input').val($(this).val());
+            }
+            $('.input').val($('.input').val() + $(this).text());
+        }
+
+        function clearField() {
+            $('.input').val("0");
+            $("#curr").text("-");
+            $("#op").text("-");
+            operator = "";
+            currentVal = 0;
+        }
+
+        function opToField() {
+            if (currentVal === 0) {
+                currentVal = $('.input').val();
+            } else {
+                currentVal = calculate(currentVal, operator, $('.input').val());
+            }
+            operator = $(this).text();
+            var operatortxt = operatorText(operator);
+            $("#curr").text(currentVal);
+            $("#op").text(operatortxt);
+            $('.input').val("0");
+        }
+
+        function parse() {
+            currentVal = parseInt(currentVal);
+            var newVal = parseInt($('.input').val());
+            currentVal = calculate(currentVal, operator, newVal);
+            printAnswer(currentVal);
+        };
+
+        function calculate(curr, op, newVal) {
+            if (!curr) {
+                return newVal;
+            }
+            if (op === "+") {
+                return curr + newVal
+            } else if (op === "-") {
+                return curr - newVal
+            } else if (op === "x") {
+                return curr * newVal
+            } else {
+                return curr / newVal
+            }
+        }
+
+        function operatorText(op) {
+            if (op === "-") {
+                return "minus";
+            } else if (op === "+") {
+                return "plus";
+            } else if (op === "x") {
+                return "times";
+            } else if (op === "÷") {
+                return "divided by";
+            }
+        }
+
+        function printAnswer(answer) {
+            $('.input').val(answer);
+            $("#curr").text("-");
+            $("#op").text("answer");
+            operator = "";
+            currentVal = 0;
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+   
+    <title>My FAQ's</title>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        body {
+            background: url('img/christmas-dark/christmas-dark.png');
+            min-height: 100%;
+            background-size: fixed;
+        }
+
+        .formCard {
+            width: 450px;
+            margin: 150px auto;
+        }
+
+        ;
+    </style>
+</head>
+
+<body>
+
+    <!-- Navi -->
+    <nav>
+        <div class="nav-wrapper grey lighten-2">
+            <a href="HomePage.html" class="brand-logo teal-text">Logo</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li>
+                    <a class="dropdown-button waves-effect waves-light teal-text" data-activates="dropdown1">
+                        My Quizz
+                        <i class="material-icons right teal-text">arrow_drop_down</i>
+                    </a>
+                </li>
+                <li>
+                    <a class="waves-effect waves-light teal-text">My FAQ's</a>
+                </li>
+                <li>
+                    <a class="cmdLogout waves-effect waves-light teal-text">Logout</a>
+                </li>
+            </ul>
+
+            <ul id="dropdown1" class="dropdown-content">
+                <li>
+                    <a class="teal-text" href="#!">Quiz one</a>
+                </li>
+                <li>
+                    <a class="teal-text" href="#!">Quiz two</a>
+                </li>
+                <li>
+                    <a class="teal-text" href="#!">Create Quiz</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Body -->
+
+    <div class="card formCard">
+        <div class="card-content">
+            <form id="newForm">
+
+            <div class="input-field col s8 teal-text">
+                <select class="validate" name="FaqCat" id="FaqCat">
+                    <option value="" disabled selected>FAQ Category</option>
+                </select>
+               <!-- <label class="left-align "data-error="lease Choose A FAQ" data-success="good!"></label> -->
+            </div>
+
+            <div class="input-field active col s6">
+                    <input id="question" name="question" type="text" class="validate">
+                    <label for="question" class="active teal-text">Questions</label>
+            </div>
+
+            <div class="input-field col s6">
+                    <input id="answer" name="answer" type="text" class="validate">
+                    <label for="answer" class="teal-text">Answer</label>
+            </div>
+
+            <div class="input-field col s6">
+                    <input id="display" name="display" type="text" class="validate">
+                    <label for="display" class="teal-text">Display Order</label>
+            </div>
+
+            <button id="cmdQuestion" class="forum waves-effect waves-light btn">
+                <i class="small material-icons">forum</i>
+                You ask too much...
+            </button>
+           </form>
+
+           <div class='container'>
+            <button id="cmdMyFAQ" class="waves-effect waves-light btn green darken-2">
+                     Yours...
+            </button>
+           </div>
+         
+
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+
+    <!-- jQuery Validation cdn -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+
+    <script src="Scripts/FAQ.js"></script>
+
+    <script type="text/javascript">
+        sabio.page.startUp = () => {
+            
+            sabio.page.handlers.dropdown();
+            
+            $('.cmdLogout').on("click", sabio.page.handlers.logout);
+            sabio.page.getFaq(sabio.page.onSuccessFaq, sabio.page.onError);
+            $('#cmdQuestion').on("click", sabio.page.handlers.PostQuestion);   
+            $('#cmdMyFAQ').on('click', sabio.page.handlers.existingQuestion); 
+        };
+
+
+        /***** Handler *****/
+        sabio.page.handlers.dropdown = () => {
+            $('.dropdown-button').dropdown('closed');
+        };
+
+        sabio.page.handlers.logout = () => {
+            event.preventDefault();
+            sabio.page.loggingout(sabio.page.logoutSucess, sabio.page.onError);
+        };
+
+        sabio.page.handlers.PostQuestion = (event) =>{
+            event.preventDefault();
+            sabio.page.initializeValidation();
+            if ($("#newForm").valid()){
+      
+            //if (sabio.page.editMode == null) { 
+            let questionData = sabio.page.userInput();
+            sabio.page.postQuest(questionData, sabio.page.onQuestSucess, sabio.page.onError);     
+            }
+            sabio.page.reset();          
+        };
+
+        sabio.page.handlers.existingQuestion = () =>{
+            window.location.replace('FAQ_Index.html');
+            console.log('lets go to my FAQ~')
+        };
+    
+        /***** Other *****/
+        sabio.page.userInput = () =>{
+            let userData = {
+                faqCategoryId: $("#FaqCat").val(),
+                question: $("#question").val(),
+                answer: $("#answer").val(),
+                displayOrder: $("#display").val(),
+            };
+            return userData;
+        };
+
+        sabio.page.reset = () =>{
+            $("#newForm")[0].reset();
+        };
+        
+
+        /***** Call Back *****/
+        sabio.page.onSuccess = () => {
+            console.log("success");
+        };
+
+        sabio.page.onError = (data, error) => {
+            console.log(data, error);
+            console.log("Too Bad!! Error! :(");
+        };
+
+        sabio.page.logoutSucess = () =>{
+            window.location.replace("login.html");
+        };
+
+        sabio.page.onSuccessFaq = (data) =>{
+            console.log("got categories");
+            for (let i = 0; i < data.items.length; i++) {
+                $(".validate").append('<option value="' + data.items[i].id  +'"  "name="FaqCat">' + data.items[i].name + '</option>');
+            };
+
+            // Initialization needs to be after all the "options" are in place
+            $('select').material_select();
+            
+        };
+
+        sabio.page.onQuestSucess = () =>{
+            console.log("question posted");
+            window.location.replace("FAQ_Index.html");
+        }
+
+
+        //****************************** Validation *******************************//
+    
+    sabio.page.initializeValidation = () => {
+      console.log("validation is ready")
+      
+      jQuery.validator.setDefaults({
+        debug: true
+      });
+      
+      let validationRules = {
+        "question": {
+        required: true,
+        },
+        "answer": {
+        required: true,
+        },
+        "display": {
+        required: true,
+        }
+      };
+      
+      let validationMessages = {
+        "question": {
+        required: "Field cannot be empty."
+        },
+        "answer": {
+        required: "Field cannot be empty."
+        },
+        "display": {
+        required: "Field cannot be empty."
+        }
+      };  
+      
+      let validationOptions = {
+        rules: validationRules,
+        messages: validationMessages
+      };
+
+      
+      
+      $("#newForm").validate(validationOptions); 
+    };
+
+
+    </script>
+
+</body>
+</html>

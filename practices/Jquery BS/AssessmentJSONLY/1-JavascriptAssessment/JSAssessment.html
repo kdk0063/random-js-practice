@@ -1,0 +1,799 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <title>Sabio Practical Assessment - Web Section</title>
+
+
+
+    <!-- Custom styles for this template -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link href="http://sabioapi2.azurewebsites.net/content/assessment-theme.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+
+
+
+
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a href="register.html" class="navbar-brand ">
+                    <span class="logo">
+                        <strong>Stay </strong><span class="handwriting">Frosty!</span><br />
+                    <small>Sabio client side web assessment</small>
+                    </span>
+                </a>
+
+            </div>
+
+
+
+            <div class="collapse navbar-collapse">
+
+                <ul class="nav navbar-nav navbar-right visible-xs">
+                    <li class="active"><a href="register.html">Home</a></li>
+                    <li><a href="register.html">Login</a></li>
+                    <li><a href="register.html">Register</a></li>
+                    <li><a href="register.html">Listings</a></li>
+                    <li><a href="register.html">My account</a></li>
+                    <li><a href="register.html">Post an ad</a></li>
+                </ul>
+                <div class="nav navbar-nav navbar-right hidden-xs">
+                    <div class="row">
+
+                        <div class="pull-right">
+
+
+                            <a data-toggle="modal" data-target="#modalLogin" href="#">Login</a> |
+                            <a href="register.html">Register</a> |
+                            <a href="register.html">Listings</a> |
+                            <a href="register.html">My account</a>
+                            <a href="register.html" class="btn btn-default post-ad-btn">Post an ad</a>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <hr class="topbar" />
+    <div class="container">
+        <br />
+        <div class="row">
+
+            <div class="col-sm-12">
+                <h1>Create an Address</h1>
+
+                <hr />
+                <p>
+                    <ol>
+
+
+                        <li>
+                            Wire up a click handler to the CREATE ADDRESS button such that the form can be submitted and the data is pulled from the form for processing.
+                        </li>
+                        <li>
+                            Every time a new registration is submitted: the data must be displayed in the right-hand column using the example html.
+                            <ul>
+                                <li>The fields that have drop downs should have their text values displayed (ie. state should show "CA" and not "1")</li>
+                                <li>If the user does not select a state you should show an alert that tells them to select a state</li>
+                            </ul>
+
+                        </li>
+
+                        <li>
+                            After the new address is appended, the form must be reset back to it's original state (i.e. all fields empty and the dropdown should says "Please Select").
+                        </li>
+                        <li>
+                            The image should show the address as the example does. this is done by manipulating the src attribute of the image. So if you add an address your house, it should show your house on the map not the address that is currently shown.
+                        </li>
+                        <li>
+                            Add a red delete button for each individual address in the right-hand column. when clicked this button should remove only that one address from the list.
+                        </li>
+
+
+                        <li>
+                            When you click anywhere on an address item in the right column, you should populate the form on the left with the data in the given address. So if you were to click on the "400 Corporate Pointe" address element (anywhere in that div) the text book for
+                            "Line 1" should change to "400 Corporate Pointe".
+                        </li>
+                        <li>
+                            After clicking submit on the button (after you clicked on an address) the address in question should be updated instead of creating a new address in the list.
+                        </li>
+
+                    </ol>
+                </p>
+                <div class="well">
+
+                    <p>
+                        While we are looking for working pages, however you can make that happen, we would like to see code with:
+                        <ul>
+                            <li>JavaScript Namespacing</li>
+                            <li>No inline functions unless absolutely required</li>
+                        </ul>
+                    </p>
+                    <p>Functional pages are the #1 priorty though.</p>
+
+                    <p><b>The initial click handler is already provided for you in the startUp function.</b></p>
+
+                </div>
+
+                <hr />
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <form class="form-vertical">
+
+
+
+                            <fieldset>
+                                <!-- Address form -->
+
+                                <div class="well">
+
+                                    <!-- full-name input-->
+                                    <!-- address-line1 input-->
+                                    <div class="control-group">
+                                        <label class="control-label">Address Line 1</label>
+                                        <div class="controls">
+                                            <input id="address-line1" name="address-line1" type="text" placeholder="address line 1" class="form-control input-xlarge">
+                                            <p class="help-block">Street address, P.O. box, company name, c/o</p>
+                                        </div>
+                                    </div>
+                                    <!-- address-line2 input-->
+                                    <div class="control-group">
+                                        <label class="control-label">Address Line 2</label>
+                                        <div class="controls">
+                                            <input id="address-line2" name="address-line2" type="text" placeholder="address line 2" class="form-control input-xlarge">
+                                            <p class="help-block">Apartment, suite , unit, building, floor, etc.</p>
+                                        </div>
+                                    </div>
+                                    <!-- city input-->
+                                    <div class="control-group">
+                                        <label class="control-label">City / Town</label>
+                                        <div class="controls">
+                                            <input id="city" name="city" type="text" placeholder="city" class="form-control input-xlarge">
+                                            <p class="help-block"></p>
+                                        </div>
+                                    </div>
+                                    <!-- region input-->
+                                    <div class="control-group">
+                                        <label class="control-label">State / Province / Region</label>
+                                        <div class="controls">
+                                            <select name="state" class="form-control input-xlarge">
+                                                <option value="" selected>Please Select</option>
+                                                <option value="AL">AL</option>
+                                                <option value="AK">AK</option>
+                                                <option value="AZ">AZ</option>
+                                                <option value="AR">AR</option>
+                                                <option value="CA">CA</option>
+                                                <option value="CO">CO</option>
+                                                <option value="CT">CT</option>
+                                                <option value="DC">DC</option>
+                                                <option value="DE">DE</option>
+                                                <option value="FL">FL</option>
+                                                <option value="GA">GA</option>
+                                                <option value="HI">HI</option>
+                                                <option value="ID">ID</option>
+                                                <option value="IL">IL</option>
+                                                <option value="IN">IN</option>
+                                                <option value="IA">IA</option>
+                                                <option value="KS">KS</option>
+                                                <option value="KY">KY</option>
+                                                <option value="LA">LA</option>
+                                                <option value="ME">ME</option>
+                                                <option value="MD">MD</option>
+                                                <option value="MA">MA</option>
+                                                <option value="MI">MI</option>
+                                                <option value="MN">MN</option>
+                                                <option value="MS">MS</option>
+                                                <option value="MO">MO</option>
+                                                <option value="MT">MT</option>
+                                                <option value="NE">NE</option>
+                                                <option value="NV">NV</option>
+                                                <option value="NH">NH</option>
+                                                <option value="NJ">NJ</option>
+                                                <option value="NM">NM</option>
+                                                <option value="NY">NY</option>
+                                                <option value="NC">NC</option>
+                                                <option value="ND">ND</option>
+                                                <option value="OH">OH</option>
+                                                <option value="OK">OK</option>
+                                                <option value="OR">OR</option>
+                                                <option value="PA">PA</option>
+                                                <option value="RI">RI</option>
+                                                <option value="SC">SC</option>
+                                                <option value="SD">SD</option>
+                                                <option value="TN">TN</option>
+                                                <option value="TX">TX</option>
+                                                <option value="UT">UT</option>
+                                                <option value="VT">VT</option>
+                                                <option value="VA">VA</option>
+                                                <option value="WA">WA</option>
+                                                <option value="WV">WV</option>
+                                                <option value="WI">WI</option>
+                                                <option value="WY">WY</option>
+                                                <option value="">-Terr.-</option>
+                                                <option value="AS">AS</option>
+                                                <option value="FM">FM</option>
+                                                <option value="GU">GU</option>
+                                                <option value="MI">MI</option>
+                                                <option value="PR">PR</option>
+                                                <option value="VI">VI</option>
+                                            </select>
+                                            <p class="help-block"></p>
+                                        </div>
+                                    </div>
+                                    <!-- postal-code input-->
+                                    <div class="control-group">
+                                        <label class="control-label">Zip / Postal Code</label>
+                                        <div class="controls">
+                                            <input id="postal-code" name="postal-code" type="text" placeholder="zip or postal code" class="form-control input-xlarge">
+                                            <p class="help-block"></p>
+                                        </div>
+                                    </div>
+                                    <!-- country select -->
+                                    <div class="control-group">
+                                        <label class="control-label">Country</label>
+                                        <div class="controls">
+                                            <select id="country" name="country" class="form-control input-xlarge">
+                                                <option value="" selected="selected">Please Select</option>
+                                                <option value="AF">Afghanistan</option>
+                                                <option value="AL">Albania</option>
+                                                <option value="DZ">Algeria</option>
+                                                <option value="AS">American Samoa</option>
+                                                <option value="AD">Andorra</option>
+                                                <option value="AO">Angola</option>
+                                                <option value="AI">Anguilla</option>
+                                                <option value="AQ">Antarctica</option>
+                                                <option value="AG">Antigua and Barbuda</option>
+                                                <option value="AR">Argentina</option>
+                                                <option value="AM">Armenia</option>
+                                                <option value="AW">Aruba</option>
+                                                <option value="AU">Australia</option>
+                                                <option value="AT">Austria</option>
+                                                <option value="AZ">Azerbaijan</option>
+                                                <option value="BS">Bahamas</option>
+                                                <option value="BH">Bahrain</option>
+                                                <option value="BD">Bangladesh</option>
+                                                <option value="BB">Barbados</option>
+                                                <option value="BY">Belarus</option>
+                                                <option value="BE">Belgium</option>
+                                                <option value="BZ">Belize</option>
+                                                <option value="BJ">Benin</option>
+                                                <option value="BM">Bermuda</option>
+                                                <option value="BT">Bhutan</option>
+                                                <option value="BO">Bolivia</option>
+                                                <option value="BA">Bosnia and Herzegowina</option>
+                                                <option value="BW">Botswana</option>
+                                                <option value="BV">Bouvet Island</option>
+                                                <option value="BR">Brazil</option>
+                                                <option value="IO">British Indian Ocean Territory</option>
+                                                <option value="BN">Brunei Darussalam</option>
+                                                <option value="BG">Bulgaria</option>
+                                                <option value="BF">Burkina Faso</option>
+                                                <option value="BI">Burundi</option>
+                                                <option value="KH">Cambodia</option>
+                                                <option value="CM">Cameroon</option>
+                                                <option value="CA">Canada</option>
+                                                <option value="CV">Cape Verde</option>
+                                                <option value="KY">Cayman Islands</option>
+                                                <option value="CF">Central African Republic</option>
+                                                <option value="TD">Chad</option>
+                                                <option value="CL">Chile</option>
+                                                <option value="CN">China</option>
+                                                <option value="CX">Christmas Island</option>
+                                                <option value="CC">Cocos (Keeling) Islands</option>
+                                                <option value="CO">Colombia</option>
+                                                <option value="KM">Comoros</option>
+                                                <option value="CG">Congo</option>
+                                                <option value="CD">Congo, the Democratic Republic of the</option>
+                                                <option value="CK">Cook Islands</option>
+                                                <option value="CR">Costa Rica</option>
+                                                <option value="CI">Cote d'Ivoire</option>
+                                                <option value="HR">Croatia (Hrvatska)</option>
+                                                <option value="CU">Cuba</option>
+                                                <option value="CY">Cyprus</option>
+                                                <option value="CZ">Czech Republic</option>
+                                                <option value="DK">Denmark</option>
+                                                <option value="DJ">Djibouti</option>
+                                                <option value="DM">Dominica</option>
+                                                <option value="DO">Dominican Republic</option>
+                                                <option value="TP">East Timor</option>
+                                                <option value="EC">Ecuador</option>
+                                                <option value="EG">Egypt</option>
+                                                <option value="SV">El Salvador</option>
+                                                <option value="GQ">Equatorial Guinea</option>
+                                                <option value="ER">Eritrea</option>
+                                                <option value="EE">Estonia</option>
+                                                <option value="ET">Ethiopia</option>
+                                                <option value="FK">Falkland Islands (Malvinas)</option>
+                                                <option value="FO">Faroe Islands</option>
+                                                <option value="FJ">Fiji</option>
+                                                <option value="FI">Finland</option>
+                                                <option value="FR">France</option>
+                                                <option value="FX">France, Metropolitan</option>
+                                                <option value="GF">French Guiana</option>
+                                                <option value="PF">French Polynesia</option>
+                                                <option value="TF">French Southern Territories</option>
+                                                <option value="GA">Gabon</option>
+                                                <option value="GM">Gambia</option>
+                                                <option value="GE">Georgia</option>
+                                                <option value="DE">Germany</option>
+                                                <option value="GH">Ghana</option>
+                                                <option value="GI">Gibraltar</option>
+                                                <option value="GR">Greece</option>
+                                                <option value="GL">Greenland</option>
+                                                <option value="GD">Grenada</option>
+                                                <option value="GP">Guadeloupe</option>
+                                                <option value="GU">Guam</option>
+                                                <option value="GT">Guatemala</option>
+                                                <option value="GN">Guinea</option>
+                                                <option value="GW">Guinea-Bissau</option>
+                                                <option value="GY">Guyana</option>
+                                                <option value="HT">Haiti</option>
+                                                <option value="HM">Heard and Mc Donald Islands</option>
+                                                <option value="VA">Holy See (Vatican City State)</option>
+                                                <option value="HN">Honduras</option>
+                                                <option value="HK">Hong Kong</option>
+                                                <option value="HU">Hungary</option>
+                                                <option value="IS">Iceland</option>
+                                                <option value="IN">India</option>
+                                                <option value="ID">Indonesia</option>
+                                                <option value="IR">Iran (Islamic Republic of)</option>
+                                                <option value="IQ">Iraq</option>
+                                                <option value="IE">Ireland</option>
+                                                <option value="IL">Israel</option>
+                                                <option value="IT">Italy</option>
+                                                <option value="JM">Jamaica</option>
+                                                <option value="JP">Japan</option>
+                                                <option value="JO">Jordan</option>
+                                                <option value="KZ">Kazakhstan</option>
+                                                <option value="KE">Kenya</option>
+                                                <option value="KI">Kiribati</option>
+                                                <option value="KP">Korea, Democratic People's Republic of</option>
+                                                <option value="KR">Korea, Republic of</option>
+                                                <option value="KW">Kuwait</option>
+                                                <option value="KG">Kyrgyzstan</option>
+                                                <option value="LA">Lao People's Democratic Republic</option>
+                                                <option value="LV">Latvia</option>
+                                                <option value="LB">Lebanon</option>
+                                                <option value="LS">Lesotho</option>
+                                                <option value="LR">Liberia</option>
+                                                <option value="LY">Libyan Arab Jamahiriya</option>
+                                                <option value="LI">Liechtenstein</option>
+                                                <option value="LT">Lithuania</option>
+                                                <option value="LU">Luxembourg</option>
+                                                <option value="MO">Macau</option>
+                                                <option value="MK">Macedonia, The Former Yugoslav Republic of</option>
+                                                <option value="MG">Madagascar</option>
+                                                <option value="MW">Malawi</option>
+                                                <option value="MY">Malaysia</option>
+                                                <option value="MV">Maldives</option>
+                                                <option value="ML">Mali</option>
+                                                <option value="MT">Malta</option>
+                                                <option value="MH">Marshall Islands</option>
+                                                <option value="MQ">Martinique</option>
+                                                <option value="MR">Mauritania</option>
+                                                <option value="MU">Mauritius</option>
+                                                <option value="YT">Mayotte</option>
+                                                <option value="MX">Mexico</option>
+                                                <option value="FM">Micronesia, Federated States of</option>
+                                                <option value="MD">Moldova, Republic of</option>
+                                                <option value="MC">Monaco</option>
+                                                <option value="MN">Mongolia</option>
+                                                <option value="MS">Montserrat</option>
+                                                <option value="MA">Morocco</option>
+                                                <option value="MZ">Mozambique</option>
+                                                <option value="MM">Myanmar</option>
+                                                <option value="NA">Namibia</option>
+                                                <option value="NR">Nauru</option>
+                                                <option value="NP">Nepal</option>
+                                                <option value="NL">Netherlands</option>
+                                                <option value="AN">Netherlands Antilles</option>
+                                                <option value="NC">New Caledonia</option>
+                                                <option value="NZ">New Zealand</option>
+                                                <option value="NI">Nicaragua</option>
+                                                <option value="NE">Niger</option>
+                                                <option value="NG">Nigeria</option>
+                                                <option value="NU">Niue</option>
+                                                <option value="NF">Norfolk Island</option>
+                                                <option value="MP">Northern Mariana Islands</option>
+                                                <option value="NO">Norway</option>
+                                                <option value="OM">Oman</option>
+                                                <option value="PK">Pakistan</option>
+                                                <option value="PW">Palau</option>
+                                                <option value="PA">Panama</option>
+                                                <option value="PG">Papua New Guinea</option>
+                                                <option value="PY">Paraguay</option>
+                                                <option value="PE">Peru</option>
+                                                <option value="PH">Philippines</option>
+                                                <option value="PN">Pitcairn</option>
+                                                <option value="PL">Poland</option>
+                                                <option value="PT">Portugal</option>
+                                                <option value="PR">Puerto Rico</option>
+                                                <option value="QA">Qatar</option>
+                                                <option value="RE">Reunion</option>
+                                                <option value="RO">Romania</option>
+                                                <option value="RU">Russian Federation</option>
+                                                <option value="RW">Rwanda</option>
+                                                <option value="KN">Saint Kitts and Nevis</option>
+                                                <option value="LC">Saint LUCIA</option>
+                                                <option value="VC">Saint Vincent and the Grenadines</option>
+                                                <option value="WS">Samoa</option>
+                                                <option value="SM">San Marino</option>
+                                                <option value="ST">Sao Tome and Principe</option>
+                                                <option value="SA">Saudi Arabia</option>
+                                                <option value="SN">Senegal</option>
+                                                <option value="SC">Seychelles</option>
+                                                <option value="SL">Sierra Leone</option>
+                                                <option value="SG">Singapore</option>
+                                                <option value="SK">Slovakia (Slovak Republic)</option>
+                                                <option value="SI">Slovenia</option>
+                                                <option value="SB">Solomon Islands</option>
+                                                <option value="SO">Somalia</option>
+                                                <option value="ZA">South Africa</option>
+                                                <option value="GS">South Georgia and the South Sandwich Islands</option>
+                                                <option value="ES">Spain</option>
+                                                <option value="LK">Sri Lanka</option>
+                                                <option value="SH">St. Helena</option>
+                                                <option value="PM">St. Pierre and Miquelon</option>
+                                                <option value="SD">Sudan</option>
+                                                <option value="SR">Suriname</option>
+                                                <option value="SJ">Svalbard and Jan Mayen Islands</option>
+                                                <option value="SZ">Swaziland</option>
+                                                <option value="SE">Sweden</option>
+                                                <option value="CH">Switzerland</option>
+                                                <option value="SY">Syrian Arab Republic</option>
+                                                <option value="TW">Taiwan, Province of China</option>
+                                                <option value="TJ">Tajikistan</option>
+                                                <option value="TZ">Tanzania, United Republic of</option>
+                                                <option value="TH">Thailand</option>
+                                                <option value="TG">Togo</option>
+                                                <option value="TK">Tokelau</option>
+                                                <option value="TO">Tonga</option>
+                                                <option value="TT">Trinidad and Tobago</option>
+                                                <option value="TN">Tunisia</option>
+                                                <option value="TR">Turkey</option>
+                                                <option value="TM">Turkmenistan</option>
+                                                <option value="TC">Turks and Caicos Islands</option>
+                                                <option value="TV">Tuvalu</option>
+                                                <option value="UG">Uganda</option>
+                                                <option value="UA">Ukraine</option>
+                                                <option value="AE">United Arab Emirates</option>
+                                                <option value="GB">United Kingdom</option>
+                                                <option value="US">United States</option>
+                                                <option value="UM">United States Minor Outlying Islands</option>
+                                                <option value="UY">Uruguay</option>
+                                                <option value="UZ">Uzbekistan</option>
+                                                <option value="VU">Vanuatu</option>
+                                                <option value="VE">Venezuela</option>
+                                                <option value="VN">Viet Nam</option>
+                                                <option value="VG">Virgin Islands (British)</option>
+                                                <option value="VI">Virgin Islands (U.S.)</option>
+                                                <option value="WF">Wallis and Futuna Islands</option>
+                                                <option value="EH">Western Sahara</option>
+                                                <option value="YE">Yemen</option>
+                                                <option value="YU">Yugoslavia</option>
+                                                <option value="ZM">Zambia</option>
+                                                <option value="ZW">Zimbabwe</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group padtop row ">
+
+                                        <div class="controls pull-right">
+
+                                            <input type="button" id="userFormSubmit" class="btn btn-primary" value="Create Address" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+
+                        </form>
+                    </div>
+
+                    <div id="account-list" class="col-md-6 col-sm-12 account-sidebar hidden-sm pull-right listings">
+                        <!-- SINGLE ACCOUNT START -->
+                        <div class="row  listing-row">
+                            <div class="col-sm-3">
+                                <a class="img-responsive" href="register.html"><img src="https://maps.googleapis.com/maps/api/staticmap?center=400+Corporate+Pointe,Culver+City,CA+90230&zoom=13&size=100x100&key=AIzaSyCQHurErpXDh3Y89jvtzzv_O_3tYyoeptI" alt="176 * 120"></a>
+                            </div>
+                            <div class="col-sm-9">
+                                <h3 class="line-one">400 Corporate Pointe</h3>
+                                <!--<p class="muted">Posted <span>Feb 05, 2014</span> to <a class="underline" href="register.html">User List</a></p>-->
+                                <p class="line-two">Apt/Suite#: <strong>B1010</strong></p>
+                                <p><span class="city-name">Culver City,</span> <span class="state-name">CA</span>&nbsp;<span class="zip-code">90230</span></p>
+                                <p class="country">United States</p>
+                                <input type="button" value="Delete" class="cmdDelete btn btn-danger">
+                            </div>
+                        </div>
+                        <!-- SINGLE ACCOUNT START -->
+                        <div class="row  listing-row">
+                            <div class="col-sm-3">
+                                <a class="img-responsive" href="register.html"><img src="https://maps.googleapis.com/maps/api/staticmap?center=100+Corporate+Pointe,Culver+City,CA+90230&zoom=13&size=100x100&key=AIzaSyCQHurErpXDh3Y89jvtzzv_O_3tYyoeptI" alt="176 * 120"></a>
+                            </div>
+                            <div class="col-sm-9">
+                                <h3 class="line-one">100 Corporate Pointe</h3>
+                                <!--<p class="muted">Posted <span>Feb 05, 2014</span> to <a class="underline" href="register.html">User List</a></p>-->
+                                <p class="line-two">Apt/Suite#: <strong>300</strong></p>
+                                <p><span class="city-name">Culver City,</span> <span class="state-name">CA</span>&nbsp;<span class="zip-code">90230</span></p>
+                                <p class="country">United States</p>
+                                <input type="button" value="Delete" class="cmdDelete btn btn-danger">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="modalLogin" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Sign in to your account</h4>
+                </div>
+                <div class="modal-body">
+                    <p>If you have an account with us, please enter your details below.</p>
+
+                    <form method="POST" action="account_dashboard.html" accept-charset="UTF-8" id="user-login-form" class="form ajax" data-replace=".error-message p">
+
+                        <div class="form-group">
+                            <input placeholder="Your username/email" class="form-control" name="email" type="text">
+                        </div>
+
+                        <div class="form-group">
+                            <input placeholder="Your password" class="form-control" name="password" type="password" value="">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-primary pull-right">Login</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a data-toggle="modal" href="#modalForgot">Forgot your password?</a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="modal-footer" style="text-align: center">
+                    <div class="error-message">
+                        <p style="color: #000; font-weight: normal;">Don't have an account? <a class="link-info" href="register.html">Register now</a></p>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <!-- Modal -->
+
+
+    <div class="footer">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-sm-4 col-xs-12">
+                    <p><strong>&copy; Sabio Assessment 2017</strong></p>
+                    <p>All rights reserved</p>
+                </div>
+
+                <div class="col-sm-8 col-xs-12">
+                    <p class="footer-links">
+                        <a href="register.html" class="active">Home</a>
+                        <a href="register.html">Typography</a>
+                        <a href="register.html">Terms and Conditions</a>
+                        <a href="register.html">Contact Us</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+
+    <!-- All your code goes below here-->
+
+
+    <script type="text/javascript">
+
+        sabio.page.updatePage = null;
+
+        sabio.page.startUp = function() {
+            console.log("Address page is online.")
+            $('#userFormSubmit').on('click', sabio.page.handlers.userFormSubmit);
+            $("#account-list").on("click", ".cmdDelete", sabio.page.handlers.cmdDelete);
+            $("#account-list").on("click", ".listing-row", sabio.page.copyProfile);
+        };
+
+        //submit button
+        sabio.page.handlers.userFormSubmit = function(event) {
+          event.preventDefault();
+          var data = sabio.page.userData();
+          if (sabio.page.alertbox(data)){
+          sabio.page.theprofile(data);
+          }
+        }
+
+        //loading the template
+        sabio.page.newTemp = function(){
+        var outputTemp = $($("#newTemplate").html());
+        return outputTemp;
+        }
+
+        //capturing user input
+        sabio.page.userData = function(){
+          var userInfo = {
+            address1: $("#address-line1").val(),
+            address2: $("#address-line2").val(),
+            dataCity: $("#city").val(),
+            dataState: $("[name='state']").val(),
+            postcode: $("#postal-code").val(),
+            dataCountry: $("#country").val(),
+          };
+          return userInfo;
+        };
+
+        sabio.page.theprofile = function(data){
+          var template;
+          //updating existing profile
+          if(sabio.page.updatePage == null)
+          {
+            template = sabio.page.newTemp();
+          }
+          else
+          {
+            template = sabio.page.updatePage;
+          }
+            template.find(".line-one").text(data.address1);
+            template.find(".line-two > strong").text(data.address2);
+            template.find(".city-name").text(data.dataCity);
+            template.find(".state-name").text(data.dataState);
+            template.find(".zip-code").text(data.postcode);
+            template.find(".country").text(data.dataCountry);
+            template.find('.img-responsive img').attr('src', 'https://maps.googleapis.com/maps/api/staticmap?center='+data.address1+','+data.dataCity+ ', ' +data. dataState+ data.postcode+ '&zoom=13&size=100x100&key=AIzaSyCQHurErpXDh3Y89jvtzzv_O_3tYyoeptI')
+
+          if(sabio.page.updatePage == null)
+          {
+          $("#account-list").append(template);
+          }
+
+          sabio.page.updatePage == null
+          sabio.page.resetForm();
+        };
+
+        sabio.page.alertbox = function(data){
+          var errorMessage = "";
+            if(!data.dataState) {
+              errorMessage += "Please Select the State.\n";
+            }
+            if (errorMessage){
+              alert(errorMessage);
+            }
+            return (!errorMessage);
+        };
+
+        sabio.page.resetForm = function(){
+          $(".form-vertical")[0].reset();
+        }
+
+        sabio.page.handlers.cmdDelete = function(){
+          event.stopPropagation();
+          $(this).closest(".row").remove();
+        };
+
+        //selecting existing profile
+        sabio.page.copyProfile = function(){
+          //storing selected existing profile and storing into "updatePage", which has inital valuse of "Null"
+          sabio.page.updatePage = $(this);
+          //load existing data and put it in "data"
+          var data = sabio.page.readProfile();
+          //put "data" back into inputline accordingly
+          sabio.page.setForm(data);
+          //change submit button name to "Update Profile"
+          $("#userFormSubmit").text("Update Profile")
+        };
+
+        //reading the selected; existing profiles
+        sabio.page.readProfile = function(){
+          var updateData = {
+            add1: sabio.page.updatePage.find(".line-one").text(),
+            add2: sabio.page.updatePage.find(".line-two > strong").text(),
+            city: sabio.page.updatePage.find(".city-name").text(),
+            state: sabio.page.updatePage.find(".state-name").text(),
+            zip: sabio.page.updatePage.find(".zip-code").text(),
+            country: sabio.page.updatePage.find(".country").text()
+          };
+          return updateData;
+        };
+
+        //putting the profile data back into original form
+        sabio.page.setForm = function(data){
+          $("#address-line1").val(data.add1);
+          $("#address-line2").val(data.add2);
+          $("#city").val(data.city);
+          $("[name='state']").val(data.state);
+          $("#postal-code").val(data.zip);
+          $("#country").val(data.country);
+        };
+
+    </script>
+
+
+</body>
+
+<!-- new template -->
+
+<script type="text/template" id="newTemplate">
+
+  <div class="row  listing-row">
+      <div class="col-sm-3">
+          <a class="img-responsive" href="register.html"><img src="https://maps.googleapis.com/maps/api/staticmap?center=100+Corporate+Pointe,Culver+City,CA+90230&zoom=13&size=100x100&key=AIzaSyCQHurErpXDh3Y89jvtzzv_O_3tYyoeptI" alt="176 * 120"></a>
+      </div>
+
+      <div class="col-sm-9">
+          <h3 class="line-one"></h3>
+          <p class="line-two">Apt/Suite#: <strong></strong></p>
+          <p><span class="city-name"></span></span> , <span class="state-name"> </span> &nbsp;
+             <span class="zip-code"></span></p>
+          <p class="country"></p>
+          <input type="button" value="Delete" class="cmdDelete btn btn-danger">
+      </div>
+  </div>
+
+</script>
+
+
+
+</html>

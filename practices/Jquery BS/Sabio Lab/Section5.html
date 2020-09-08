@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- for mobile devie -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Bootstrap 101 Template</title>
+  <!-- Bootstrap -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+
+</head>
+
+<body>
+
+
+  <div class="card-content black-text">
+    <div class="col-sm-3 formCard">
+      <h1>Ajax Entity</h1>
+      <form class="row" id="newForm">
+        <div class="form-group ">
+
+          <input type="text" class="form-control" id="teams" placeholder="Team Name">
+          <input type="text" class="form-control" id="Sports" placeholder="Sports">
+          <input type="text" class="form-control" id="City" placeholder="City">
+
+          <button type="button" class="btn btn-success cmdAdd">Add</button>
+          <button type="button" class="btn btn-info cmdPost">Post</button>
+          <button type="button" class="btn btn-primary cmdUpdate" style="display:none">Update</button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="area">
+
+  </div>
+
+  </div>
+
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+  <!-- All your code goes below here-->
+
+  <script type="text/javascript">
+    sabio.page.currentEntityId = null;
+    sabio.page.tempEntity = null;
+
+    sabio.page.startUp = function() {
+      $(".cmdAdd").on("click", sabio.page.handlers.submitEntities);
+      $(".cmdPost").on("click", sabio.page.handlers.PostEntities);
+      $("#area").on("click", ".entityEdit", sabio.page.handlers.editEntity);
+      $("#area").on("click", ".entityDelete", sabio.page.handlers.deleteEntity);
+      $(".cmdUpdate").on("click", sabio.page.handlers.updateComment);
+
+    };
+
+
+    //********************* HANDLERS ********************
+
+    sabio.page.handlers.submitEntities = function(event) {
+      event.preventDefault();
+      var user = sabio.page.capturedData();
+      sabio.page.postEntity(user, sabio.page.submitEntity, sabio.page.onError);
+    };
+
+    sabio.page.handlers.PostEntities = function() {
+      sabio.page.getEntities(sabio.page.onGetEntitiesSuccess, sabio.page.onError);
+    };
+
+    sabio.page.handlers.editEntity = function() {
+      var id = $(this).closest(".userNBA").attr("id");
+      sabio.page.currentEntityId = id;
+      sabio.page.getEntity(id, sabio.page.editEntity, sabio.page.onError);
+      $(".cmdUpdate").show(450);
+    };
+
+    sabio.page.handlers.deleteEntity = function() {
+      var id = $(this).closest(".userNBA").attr("id");
+      sabio.page.tempEntity = $(this).closest(".userNBA");
+      sabio.page.getDeleteEntity(id, sabio.page.deleteEntitySuccess, sabio.page.onError);
+    };
+
+    sabio.page.handlers.updateComment = function(event) {
+      event.preventDefault();
+
+      var entity = sabio.page.capturedData();
+      var id = sabio.page.currentEntityId;
+      entity.id = id;
+      sabio.page.updateEntity(id, entity, sabio.page.updateEntitySuccess, sabio.page.onError);
+
+    };
+
+
+
+
+    //********************* Ajax ********************
+
+    sabio.page.postEntity = function(user, onSuccess, onError) {
+
+      var url = "http://sabioapi2.azurewebsites.net/api/entities/nbas"
+
+      var settings = {
+        headers: {
+          'SABIO-AUTH': 'U4TM3BMU5'
+        },
+        cache: 'false',
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8", //content type type of content you're sending
+        data: user, //ajax property specific "payload"
+        dataType: "Json", // data type we are getting back
+        success: onSuccess,
+        error: onError,
+        type: "POST"
+      };
+      $.ajax(url, settings);
+    }
+
+
+    //posting entire entities on the page
+    sabio.page.getEntities = function(onSuccess, onError) {
+
+      var url = "http://sabioapi2.azurewebsites.net/api/entities/nbas";
+
+      var settings = {
+        headers: {
+          'SABIO-AUTH': 'U4TM3BMU5'
+        },
+        cache: 'false',
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        dataType: "Json", // how data is coming back
+        success: onSuccess, //this is a callback function
+        error: onError, // this is a callback function
+        type: "GET", // http method/verb
+
+      };
+      // this is the actual ajax call
+      $.ajax(url, settings);
+    };
+
+
+    //selecting single entity 
+    sabio.page.getEntity = function(id, onSuccess, onError) {
+
+      var url = "http://sabioapi2.azurewebsites.net/api/entities/nbas/" + id;
+
+      var settings = {
+        headers: {
+          'SABIO-AUTH': 'U4TM3BMU5'
+        },
+        cache: 'false',
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        dataType: "Json", // how data is coming back
+        success: onSuccess, //this is a callback function
+        error: onError, // this is a callback function
+        type: "GET", // http method/verb
+
+      };
+      // this is the actual ajax call
+      $.ajax(url, settings);
+    };
+
+
+    //deleting selected entity 
+    sabio.page.getDeleteEntity = function(id, onSuccess, onError) {
+
+      var url = "http://sabioapi2.azurewebsites.net/api/entities/nbas/" + id;
+
+      var settings = {
+        headers: {
+          'SABIO-AUTH': 'U4TM3BMU5'
+        },
+        cache: 'false',
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        dataType: "Json", // how data is coming back
+        success: onSuccess, //this is a callback function
+        error: onError, // this is a callback function
+        type: "DELETE", // http method/verb
+
+      };
+      // this is the actual ajax call
+      $.ajax(url, settings);
+    };
+
+    sabio.page.updateEntity = function(id, entData, onSuccess, onError) {
+
+      var url = "http://sabioapi2.azurewebsites.net/api/entities/nbas/" + id;
+
+      var settings = {
+        headers: {
+          'SABIO-AUTH': 'U4TM3BMU5'
+        },
+        cache: 'false',
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: entData,
+        dataType: "Json", // how data is coming back
+        success: onSuccess, //this is a callback function
+        error: onError, // this is a callback function
+        type: "PUT", // http method/verb
+
+      };
+      // this is the actual ajax call
+      $.ajax(url, settings);
+    };
+
+
+    //********************* Callback ********************
+
+    //post entity
+    sabio.page.submitEntity = function(data, textStatus, XHR) {
+      console.log(data);
+      sabio.page.clearForm();
+    };
+
+    //get all entities
+    sabio.page.onGetEntitiesSuccess = function(data) {
+      if (data && data.items) {
+        sabio.page.displayEntities(data.items);
+      };
+    };
+
+
+    //posting selected entity back into user input lines
+    sabio.page.editEntity = function(data) {
+
+      $("#teams").val(data.item.team);
+      $("#Sports").val(data.item.sports);
+      $("#City").val(data.item.city);
+    };
+
+
+    //deleting selected entity 
+    sabio.page.deleteEntitySuccess = function(data) {
+      sabio.page.tempEntity.remove();
+      sabio.page.currentEntityId = null;
+    };
+
+
+    //updating selected entity
+    sabio.page.updateEntitySuccess = function() {
+      sabio.page.clearForm();
+    };
+
+
+
+    //on Error 
+    sabio.page.onError = (status) => {
+      console.log(status);
+    };
+
+    //********************* Other ********************
+
+    sabio.page.capturedData = function() {
+      var userObject = {
+        team: $("#teams").val(),
+        sports: $("#Sports").val(),
+        city: $("#City").val()
+      };
+      return userObject;
+    };
+
+    var userData = sabio.page.capturedData();
+
+    sabio.page.displayEntities = function(items) {
+      for (var i = 0; i < items.length; i++) {
+        var entitiesTemplate = sabio.page.loadTemplate();
+        entitiesTemplate.find(".tName").text("Team: " + items[i].team);
+        entitiesTemplate.find(".sName").text("Sports: " + items[i].sports);
+        entitiesTemplate.find(".cName").text("City: " + items[i].city);
+        entitiesTemplate.attr("id", items[i].id);
+        $("#area").append(entitiesTemplate);
+      };
+    };
+
+    sabio.page.loadTemplate = function() {
+      return $($("#template").html());
+    };
+
+    sabio.page.clearForm = function() {
+
+      $("#newForm")[0].reset();
+
+    };
+  </script>
+
+  <script type="text/template" id="template">
+    <div class="userNBA">
+      <p class="tName"></p>
+      <p class="sName"></p>
+      <p class="cName"></p>
+      <button type="button" class="btn btn-warning entityEdit">Edit</button>
+      <button type="button" class="btn btn-danger entityDelete">Delete</button>
+    </div>
+  </script>
+
+
+
+
+</body>
+
+</html>

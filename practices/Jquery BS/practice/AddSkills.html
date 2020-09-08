@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+  <!-- STYLESHEETS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <style>
+    body,
+    html {
+      background: url('img/background.png');
+      min-height: 100vh;
+    }
+  </style>
+
+
+
+  <title>User Form</title>
+</head>
+
+
+<body>
+  <div class="container valign-wrapper">
+    <div class="row">
+      <div class="card formCard">
+        <div class="card-content black-text">
+          <h3 class="userInfoName">User Info</h3>
+          <br>
+          <div class="row">
+            <form class="col s12" id="userForm">
+              <div class="row">
+                <div class="input-field col s5">
+                  <input id="first_name" name='first' type="text" placeholder="First Name">
+                  <label for="first_name"></label>
+                </div>
+
+                <div class="input-field col s2">
+                  <input id="middle_name" type="text" name="middle" placeholder="Initial">
+                  <label for="middle_name"></label>
+                </div>
+
+                <div class="input-field col s5">
+                  <input id="last_name" name='last' type="text" placeholder="Last Name">
+                  <label for="last_name"></label>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="email" name='email' type="email" placeholder="Email">
+                  <label for="email"></label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="school" name='school' type="text" placeholder="School/Education">
+                  <label for="telephone"></label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="skills" name='skills' type="text" placeholder="Skills">
+                  <label for="Skills"></label>
+                </div>
+              </div>
+
+              <!--
+              <div class="row">
+                <p class="col s12 left-align">
+                  <input type="checkbox" name="admin" id="admin" />
+                  <label for="admin">Administrator</label>
+                </p>
+              </div>-->
+
+
+            </form>
+          </div>
+        </div>
+
+
+        <div class="card-action">
+          <div class="row">
+
+            <div class="col s6">
+              <button id="btnAdd" class="btn blue darken-2 waves-effect waves-light" type="submit">Add Skills
+              <i class="left material-icons">book</i>
+              </button>
+            </div>
+
+            <div class="col s6">
+              <button id="btnSubmit" class="btn green darken-2 waves-effect waves-light" type="submit">Create User
+              <i class="left material-icons">person</i>
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="container ">
+          <div class="row marginMe">
+
+          </div>
+        </div>
+
+
+        <!-- SCRIPTS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+        <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+
+
+        <script type="text/javascript">
+          sabio.page.startUp = () => {
+            console.log("Fired up and ready to go!");
+          };
+        </script>
+
+
+
+        <!-- Template  -->
+        <script type="text/template" id="template">
+
+
+        </script>
+
+
+
+</body>
+
+</html>

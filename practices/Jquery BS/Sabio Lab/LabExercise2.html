@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScriptTesting</title>
+    <meta name="viewport" content="width=device-width" />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="http://sabioapi2.azurewebsites.net/Content/jasmine/jasmine.css" rel="stylesheet" />
+    <link href="http://sabioapi2.azurewebsites.net/Content/labexercises/js-testing-labs.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div>
+
+
+
+<h2>Sum Function</h2>
+<div class="instructions col-xs-12">
+    <h3>Instructions</h3>
+    <ol class="list-group">
+        <li class="list-group-item">
+            <p>
+                Open the console in the browser and run the test <span class="b">sabioTester('sumFx')</span>. You will
+                now see the specs you need to test for. Use this function to perform tests.
+            </p>
+        </li>
+        <li class="list-group-item">
+            <p>
+                Create a function called <span class="b">sabio.page.isNumber</span> that takes a parameter and checks
+                if the <span class="i">type</span> of this parameter is an integer. If so it should give back the bool
+                <span class="i">true</span> and if not <span class="i">false</span>.
+            </p>
+        </li>
+        <li class="list-group-item">
+            <p>
+                Create a function called <span class="b">sabio.page.sum</span> that takes two integers and returns the
+                sum of these two. Use the <span class="i">sabio.page.isNumber</span> function to make sure that the parameters
+                passed to this function are integers. If the parameters are not integers the function should return the message
+                <span class="b">'Please enter an integer'</span>.
+            </p>
+        </li>
+    </ol>
+</div>
+
+
+
+
+
+    </div>
+
+    <!-- jquery -->
+    <script src="http://sabioapi2.azurewebsites.net/Scripts/jquery-2.1.3.min.js"></script>
+    <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+    <!--bootstrap-->
+    <script src="http://sabioapi2.azurewebsites.net/Scripts/bootstrap.min.js"></script>
+    <!-- jasmine -->
+    <script src="http://sabioapi2.azurewebsites.net/Scripts/jasmine/jasmine.js"></script>
+    <script src="http://sabioapi2.azurewebsites.net/Scripts/jasmine/jasmine-html.js"></script>
+    <script src="http://sabioapi2.azurewebsites.net/Scripts/jasmine/boot.js"></script>
+    <script src="http://sabioapi2.azurewebsites.net/Scripts/jasmine/jasmin-jquery.js"></script>
+
+
+    <script src="http://sabioapi2.azurewebsites.net/Scripts/labTests/sabio.tests.logging.js"></script>
+
+
+
+    <!--specs-->
+
+    <script src="http://sabioapi2.azurewebsites.net/Scripts/labTests/SumFunctions.spec.js"></script>
+
+
+
+    <!--Write your scripts below-->
+    <script>
+
+    sabio.page.isNumber = function(num){
+      if(Math.round(num) === null)
+      {
+        return false;
+      }
+      else
+      {
+        return true;
+      }
+    };
+
+    sabio.page.sum = function(numA, numB){
+      if(sabio.page.isNumber(numA) && sabio.page.isNumber(numB)){
+        return numA + numB;
+      }
+      else{
+        return "Please enter an integer";
+      }
+    };
+
+    </script>
+
+
+
+</body>
+</html>

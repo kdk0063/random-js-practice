@@ -1,0 +1,116 @@
+<script>
+  /*
+
+      var a = 78;
+      var a = "hello";
+      var a = {};
+      var a = [3, 4];
+      //alert(a);
+
+      console.log(i);
+
+      function sum(){
+        for(let i = 0; i < 4; i++){
+           a+=3;
+        }
+          console.log(i);
+      }
+
+
+    //****** Older code
+
+
+    sabio.page.isNumber = function(){
+      if (Number.isInteger(x)){
+
+      }
+      else{
+        return false;
+      }
+    }
+
+    //***** OR   ES6 JS code
+
+    sabio.page.isNumber = (x) => Number.isInteger(x);
+
+
+    sabio.page.loopNum = (arr) => {
+      if (arr && Array.isArray(arr)){
+        return arr.filter(elm => Number.isInteger(elm) === true)
+      }
+      else{
+        return "Message";
+      }
+    }
+    */
+
+
+  /*
+      const num = [25, 1, 22, 3, 42, 5];
+
+      const sortNum = (arr) => {
+        arr.sort((a, b) => a - b);
+        console.log(arr);
+      }
+
+      sortNum(num);
+  */
+
+
+  //reverse a string
+  /*
+  function reverseString(str) {
+    return str.split("").reverse().join("");
+  }
+  reverseString("");
+
+  //reverse an array
+  Arr = [1, 2, 3];
+  Arr.reverse();
+  console.log(Arr);
+  */
+
+
+  /*
+  //revere an array using a loop
+  sabio.page.loopReverse = function(arr) {
+    for (i = arr.length - 1; i >= 0; i--) {
+      xArray = [];
+      xArray.push(arr[i]);
+    }
+  }
+  */
+
+  
+    // function reverseArrayInPlace(arra) {
+    //   for (var i = arra.length - 1, j = 0; i > j; i-- , j++) {
+    //     [arra[i], arra[j]] = [arra[j], arra[i]];
+    //   }
+    // }
+    // // Demo:
+    // var arra = ['a', 'n', 'd', 'r', 'e', 'w'];
+    // reverseArrayInPlace(arra);
+    // console.log(arra);
+  
+
+  
+  var array = [[1, 2, 3], 
+              [4, 5, 6],
+              [7, 8, 9]];
+
+  function algo(array) {
+    for (var i = array.length - 1 ; i > 0; i--) {
+      for(var j= 0; j < array[i].length ; j++){                    
+        var temp = array[i][j];
+        array[i][j] = array[j][i];
+        array[j][i] = temp                
+    }
+  }
+}
+algo(array);
+console.log(array);
+
+
+
+
+</script>

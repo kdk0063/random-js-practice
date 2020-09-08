@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title></title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<style>
+    div {
+        margin: 10px;
+    }
+
+</style>
+
+<body>
+    <h1>Search for a book!</h1>
+    <div id="container"><span id="con"><input id="bookName" name="postal-code" type="text" placeholder="book title" class="input-xlarge"><button type="button" class="btn btn-primary" id="bookSub">Submit</button></span></div>
+    <div id="test"></div>
+    <div id="data"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+
+
+
+    <script type="text/javascript">
+        sabio.page.startUp = function() {
+            $("#bookSub").on("click", sabio.page.handlers.book)
+        }
+
+         /****************************** HANDLERS *******************************/
+        
+        sabio.page.handlers.book = function() {
+            sabio.page.book(sabio.page.onSuccessBook, sabio.page.onError)
+        }
+
+        
+        /****************************** AJAX *******************************/
+
+        
+        sabio.page.book = function(onSuccess, onError) {
+            let url = "https://www.googleapis.com/books/v1/volumes?q=" + $("#bookName").val();
+
+            let settings = {
+                cache: false,
+                success: onSuccess,
+                error: onError,
+                type: "GET"
+            };
+            $.ajax(url, settings);
+        }
+        
+         /****************************** Callbacks *******************************/
+        
+        
+        sabio.page.onSuccessBook = function(data) {
+            $("#bookName").val("");
+            $("#test").empty();
+            $("#data").empty();
+            console.log("Success!")
+            console.log(data);
+            $("#test").append("<img src=\"" + data.items[0].volumeInfo.imageLinks.thumbnail + "\">");
+            $("#data").append("Author: " + data.items[0].volumeInfo.authors + "<br>")
+            $("#data").append("Type: " + data.items[0].volumeInfo.categories + "<br>")
+            $("#data").append("Title: " + data.items[0].volumeInfo.title)
+        }
+
+        sabio.page.onError = function() {
+            console.log("Error!")
+        }
+
+    </script>
+
+</body>
+
+</html>

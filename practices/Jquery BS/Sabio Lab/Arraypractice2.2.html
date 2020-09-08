@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Practice Template</title>
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<!--
+**The Reading List
+Create an array of 4 objects, where each object describes a book and has properties for the title (a string), author (a string), and alreadyRead (a boolean indicating if you read it yet).
+create an html template (inside of <script> tags) to display the info about each book, on this template have a DELETE button to remove it from the list
+
+Iterate through the array of books inside the startUp function. For each book, log the book title and book author like so: "The Hobbit by J.R.R. Tolkien" inside of the template and append to a container div.
+
+Now use an if/else statement to change the output depending on whether you read it yet or not. If you read it, have a <p> tag in that template that reads something like 'You already read "The Hobbit" by J.R.R. Tolkien', and if not, have a different <p> tag like 'You still need to read "The Lord of the Rings" by J.R.R. Tolkien.'
+
+Finally, make a form (use a radio button or checkbox for the boolean property) w/ a button that on click, will take the info from each input, create an object, give that object to a new function that sets up the template before appending it to the original container
+-->
+<body>
+
+  <div class="container" id="bookContainer">
+      <form class="row" id="newBookForm">
+          <div class="form-group">
+              <label class="col-sm-6">Book Title *</label>
+              <div>
+                  <input type="text" class="form-control" id="bookTitle" placeholder="Book Title">
+              </div>
+          </div>
+
+          <div class="form-group">
+              <label class="col-sm-6">Author *</label>
+              <div>
+                  <input type="text" class="form-control" id="bookAuthor" placeholder="Author">
+              </div>
+          </div>
+
+          <div class="form-group">
+            <div>
+                <label for="read"> Already read</label>
+                <input type="radio" name="read" value="read" id="read"><br>
+                <label for="needToRead"> Still need to read</label>
+                <input type="radio" name="read" value="needToRead" id="needToRead">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <button type="button" id="submitBook" class="btn btn-primary newBookForm">Add Book to List</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row bookListings">
+        <div class="col-sm-6">
+        </div>
+    </div>
+
+  </div>
+
+  <!-- jQuery(necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+
+  <!-- All your code goes below here-->
+  <script type="text/javascript">
+  sabio.page.startUp = function(){
+    $("#bookContainer").on("click", ".deleteBtn", sabio.page.handlers.deleteBtn);
+    $("#submitBook").on("click", sabio.page.handlers.submitBtn);
+
+    for(i = 0; i < books.length; i++){
+      //load a template
+      var userTemp = sabio.page.newTemplate();
+      //replace title tage with title from array list
+        userTemp.find(".title").text(books[i].title);
+        userTemp.find(".author").text(books[i].author);
+
+      if(books[i].alreadyRead == true)
+      {
+        userTemp.find(".alreadyRead").text("You've already read " + books[i].title + " by " + books[i].author)
+      }
+      else
+      {
+        userTemp.find(".alreadyRead").text("You need to read " + books[i].title + " by " + books[i].author)
+      }
+      $("#bookContainer").append(userTemp);
+    }
+  };
+
+//arry list of book information
+var books=[
+  {
+    title: "Freakonomics",
+    author: "Steven Levitt",
+    alreadyRead: true
+  },
+  {
+    title: "Blink",
+    author: "Malcolm Gladwell",
+    alreadyRead: true
+  },
+  {
+    title: "Creativity, Inc",
+    author: "Edwin Catmull",
+    alreadyRead: false
+  },
+  {
+    title: "Assholes finish first",
+    author: "Tucker Max",
+    alreadyRead: true
+  }
+];
+
+//creating a new template
+sabio.page.newTemplate = function (){
+  var temp = $($("#bookTemplate").html());
+  //cloning the template for for loop purpose
+  //var returnTemp = $(temp).clone();
+  return temp;
+  //return returnTemp;
+}
+
+sabio.page.handlers.deleteBtn = function (){
+  $(this).closest(".bookListing").remove();
+}
+
+//capturing user data into an object
+sabio.page.userInput = function(){
+  var userData = {
+  titleUser: $("#bookTitle").val(),
+  authorUser: $("#bookAuthor").val(),
+  readUser: $("input[name=read]:checked").val()
+  };
+  return userData;
+}
+
+sabio.page.handlers.submitBtn = function(event){
+  event.preventDefault();
+  var data = sabio.page.userInput();
+  var outputTemp = sabio.page.newTemplate();
+
+/*
+  if(data.titleUser === "" || data.authorUser === "")
+  {
+    alert("Book title or author field cannnot be empty");
+    return;
+  }
+*/
+  outputTemp.find(".title").text(data.titleUser);
+  outputTemp.find(".author").text(data.authorUser);
+
+  if(data.readUser === "read")
+  {
+    outputTemp.find(".alreadyRead").text("You already read " + data.titleUser + " by " + data.authorUser)
+  }
+  else if (data.readUser === "needToRead")
+  {
+    outputTemp.find(".alreadyRead").text("You still have to read " + data.titleUser + " by " + data.authorUser)
+  }
+  else
+  {
+    alert("Please leave no marks unchecked");
+    return;
+  }
+  $("#bookContainer").append(outputTemp);
+}
+</script>
+
+
+<!-- new template -->
+<script type="text/html" id="bookTemplate">
+
+    <div class="row bookListing">
+        <div class="col-sm-6">
+            <p><span class="title"></span> by <span class="author"></span></p>
+            <p><span class="alreadyRead"></span></p>
+            <button type="button" class="btn btn-danger deleteBtn">Delete Book</button>
+        </div>
+    </div>
+</script>
+
+
+</body>
+</html>

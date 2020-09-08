@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css'>
+
+
+
+
+    <title>Home Page</title>
+
+    <!-- STYLESHEETS -->
+    <!-- css / materialized website -->
+    <!-- http://www.materializecss.com/getting-started.html -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+    <style>
+        body {
+            background: url('img/christmas-dark/christmas-dark.png');
+            min-height: 100%;
+            background-size: fixed;
+        }
+
+        .GetData {
+            margin: 150px auto;
+            width: 450px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navi -->
+    <nav>
+        <div class="nav-wrapper grey lighten-2">
+            <a class="brand-logo teal-text">Logo</a>
+
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li>
+                    <a class="dropdown-button waves-effect waves-light teal-text" data-activates="dropdown1">
+                        My Quizz
+                        <i class="material-icons right teal-text">arrow_drop_down</i>
+                    </a>
+                </li>
+                <li>
+                    <a class="waves-effect waves-light teal-text" href="FAQ.html">My FAQ's</a>
+                </li>
+                <li>
+                    <a class="cmdLogout waves-effect waves-light teal-text">Logout</a>
+                </li>
+            </ul>
+
+            <ul id="dropdown1" class="dropdown-content">
+                <li>
+                    <a class="teal-text" href="#!">Quiz one</a>
+                </li>
+                <li>
+                    <a class="teal-text" href="#!">Quiz two</a>
+                </li>
+                <!-- Modal Trigger -->
+                <li>
+                    <a class="teal-text waves-effect waves-light modal-trigger" href="Quizz.html">Create Quiz</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Body -->
+
+    <div class="GetData">
+
+    </div>
+
+
+    <!-- Modal to Create Quiz -->
+
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>
+                <span class="card-title">Create Quiz</span>
+            </h4>
+
+            <div class=createQuiz>
+                <div class="row">
+                    <div class="input-field col s8">
+                        <input value=" " id="QuizName" type="text">
+                        <label class="active" for="first_name2">Quiz Name</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <select id="defAnswer">
+                            <option value="" disabled selected>Default Answer</option>
+                            <option value="single">Single</option>
+                            <option value="multiple">Multiple</option>
+                            <option value="open">Open</option>
+                        </select>
+                        <label>Default Answer</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <p>
+                        <input type="checkbox" id="randQuest" />
+                        <label for="randQuest">Randomize Questions</label>
+                    </p>
+                </div>
+
+                <div class="row">
+                    <p>
+                        <input type="checkbox" id="randAnswer"/>
+                        <label for="randAnswer">Randomize Answers</label>
+                    </p>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s8">
+                        <input value=" " id="empID" type="text" disabled>
+                        <label class="active" for="first_name2">Employer ID</label>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button id='cmdCreate' class="waves-effect waves-light btn">Create Quiz</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+
+    <script type="text/javascript">
+
+        sabio.page.startUp = () => {
+            /* Materialize */
+            sabio.page.handlers.dropdown();
+            $('.modal').modal();
+            $('select').material_select();
+
+            sabio.page.GetUser(sabio.page.onSuccess, sabio.page.onError);
+            $(document).on("click", ".cmdLogout", sabio.page.handlers.logout);
+           
+        };
+
+
+        /***** Handler *****/
+        sabio.page.handlers.dropdown = () => {
+            console.log("click click!");
+            $('.dropdown-button').dropdown('closed');
+        };
+
+        /*
+        sabio.page.handlers.logout = (event) => {
+            event.preventDefault();
+            sabio.page.loggingout(sabio.page.logoutSuccess, sabio.page.onError);
+        };
+
+        sabio.page.handlers.createQuiz = (event) => {
+           event.preventDefault();
+           const data = sabio.page.registerQuiz();
+           sabio.page.crtQuiz(data, sabio.page.createSuccess, sabio.page.onQuizError);
+        };
+        */
+
+        /***** Other *****/
+        sabio.page.loadtemplate = () => {
+            let pTemp = $($("#template").html());
+
+            return pTemp;
+        };
+
+        /*
+        sabio.page.registerQuiz = () => {
+
+          let userQuizz = {
+            QuizName: $("#QuizName").val(),
+            defaultAnswerType: $("#defAnswer").val(),
+            randomizeQuestions: $("#randQuest").is(':checked'),
+            randomizeAnswers: $("#randAnswer").is(':checked'),
+            employerId: $("#empID").val(),
+          }
+          console.log(userQuizz);
+          return userQuizz;
+          
+        };
+        */
+
+        /***** Ajax *****/
+        sabio.page.GetUser = (onSuccess, onError) => {
+            const url = "https://pacoima-ypi.azurewebsites.net/api/people/currentuser";
+
+            const settings = {
+                cache: false,
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                dataType: "json",
+                type: "GET",
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: onSuccess,
+                error: onError
+            };
+            $.ajax(url, settings);
+        };
+
+        sabio.page.loggingout = (onSuccess, onError) => {
+            const url = "https://pacoima-ypi.azurewebsites.net/api/users/logout";
+
+            const settings = {
+                cache: false,
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                dataType: "json",
+                xhrFields: {
+                    withCredentials: true
+                },
+                type: "GET",
+                success: onSuccess,
+                error: onError
+            };
+            $.ajax(url, settings);
+        };
+
+/*
+        sabio.page.userID = (onSuccess, onError) =>{
+            let url = "https://pacoima-ypi.azurewebsites.net/api/users/ids";
+
+            let settings = {
+                cache: false,
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                dataType: "json",
+                xhrFields: {
+                    withCredentials: true
+                },
+                type: "GET",
+                success: onSuccess,
+                error: onError
+            };
+            $.ajax(url, settings);
+        };
+
+        sabio.page.crtQuiz = (data, onSuccess, onError)=>{
+            let url = "https://pacoima-ypi.azurewebsites.net/api/quizzes/";
+
+            let settings = {
+                cache: false,
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                data:data,
+                dataType: "json",
+                xhrFields: {
+                    withCredentials: true
+                },
+                type: "POST",
+                success: onSuccess,
+                error: onError
+            };
+            $.ajax(url, settings);
+        };
+
+*/
+        /***** Call Back *****/
+
+        sabio.page.onSuccess = (data) => {
+            console.log(data)
+            const pTemp = sabio.page.loadtemplate();
+            pTemp.find(".name").text((data.item.firstName) + " " + (data.item.lastName));
+            $(".GetData").append(pTemp);
+        };
+
+        sabio.page.onError = (data, error) => {
+            console.log(data, error);
+            console.log("Too Bad!! Error! :(");
+            window.location.replace("login.html");
+        };
+
+        sabio.page.logoutSuccess = () => {
+            window.location.replace("login.html");
+        };
+
+/*
+        sabio.page.userIDSuccess = (data) =>{
+            console.log(data);
+            const employID = data.item.employerId;
+            console.log(employID);
+            $("#empID").val(employID);
+        };
+
+        sabio.page.createQuizzSuccess = (data) =>{
+            console.log('Quiz is created');
+        };
+
+        sabio.page.onQuizError = (data, error) =>{
+            console.log('cant create quiz: ERROR')
+        };
+*/
+
+    </script>
+
+    <!-- Template -->
+    <script type="text/template" id="template">
+
+
+ <div class="card z-depth-5 grey lighten-2">
+  <div class="card-content teal-text">
+   <h3><span class="card-title">Welcome</span></h3>
+   <p class="card-text"><span class="name teal-text"></span></p>
+  </br>
+   <a class="cmdLogout teal-text" style="float:right" href="#">Click here to logout</a>
+   
+  </div>
+ </div>
+
+
+</script>
+
+</body>
+
+</html>

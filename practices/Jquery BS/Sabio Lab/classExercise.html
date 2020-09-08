@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="container" id="userStuff">
+  <form class="userInput">
+    <div class="row container divInPut">
+        <div class="col-xs-12">
+              Your Name:
+              <input type="text" class="form-control" id="nameUser" placeholder="Book Title">
+        </div>
+    </div>
+
+    <div class="row container divForm">
+      <div class="col-xs-12">
+              Your ID:
+              <input type="text" class="form-control" id="idUser" placeholder="Book Title">
+      </div>
+      </div>
+
+    <div class="row container divBtn">
+      <div class="col-xs-12">
+        <button type="button" id="submit" class="btn btn-success cmdSubmit">Submit</button>
+      </div>
+    </div> <!--row -->
+  </form>
+
+
+<div class="row lists">
+    <div class="col-sm-6">
+    </div>
+</div>
+
+</div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+
+    <!-- write your code here -->
+    <script type="text/javascript">
+
+        sabio.page.startUp = function () {
+          $(".cmdSubmit").on("click", sabio.page.handlers.btnSubmit)
+          $("#userStuff").on("click", ".cmdDelete", sabio.page.handlers.btnDelete)
+
+          for (i = 0; i <names.length; i++){
+            $(".lists").append("<p>" + names[i].first + " " + names[i].last + "</p>");
+          }
+        };
+
+        sabio.page.userData = function(){
+          var data ={
+            name: $("#nameUser").val(),
+            Id: $("#idUser").val()
+          }
+          return data;
+        }
+
+        sabio.page.newTemp = function(){
+          var temp = $($("#outPut").html());
+          return temp;
+        }
+
+        sabio.page.handlers.btnSubmit = function(event){
+          event.preventDefault();
+          var inPut = sabio.page.userData();
+          var temp = sabio.page.newTemp();
+          temp.find("#userName").text(inPut.name);
+          temp.find("#userID").text(inPut.Id);
+          $(".lists").append(temp)
+          $(".userInput")[0].reset();
+        }
+
+        sabio.page.handlers.btnDelete = function(){
+          $(this).closest(".divOutPut").remove();
+        }
+
+        var names = [
+          {
+            first: "clayton",
+            last: "kershaw"
+          },
+          {
+            first: "iron",
+            last: "man"
+          },
+          {
+            first: "john",
+            last: "snow"
+          },
+          {
+            first: "you know",
+            last: "nothing"
+          },
+          {
+            first: "steph",
+            last: "curry"
+          }
+        ];
+
+    </script>
+
+</body>
+
+<!-- if I have templates, there is where I put them.  Make sure to put either a class or an ID-->
+<script type="text/template" id="outPut">
+
+  <div class="row container divOutPut">
+    <div class="col-xs-10">
+      <span id="userName" type="text" name="name"></span> , <span id="userID"></span>
+      <button type="button" id="submit" class="btn btn-danger cmdDelete">Delete</button>
+    </div>
+  </div>
+
+</script>
+
+
+
+</html>

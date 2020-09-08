@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css'>
+
+
+  <title>Register</title>
+
+  <!-- STYLESHEETS -->
+  <!-- css / materialized website -->
+  <!-- http://next.materializecss.com/getting-started.html -->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+  <style>
+    body {
+      background: url('img/christmas-dark/christmas-dark.png');
+      min-height: 100%;
+      background-size: fixed;
+    }
+
+    .container {
+      margin: auto;
+      width: 40%;
+      margin-top: 45px;
+    }
+    
+  </style>
+
+
+
+</head>
+
+
+<body>
+  <!-- Navbar content -->
+
+
+
+  <!-- Register Card -->
+<form class="registerForm">
+  <div class="container">
+    <div class="card formCard">
+      <div class="card-content black-text">
+        <h3 class="userInfoName teal-text center">Please Register</h3>
+        <br>
+
+        <div class="row">
+          <div class="input-field col s5">
+            <input id="firstname" name='first' type="text" placeholder="First Name">
+            <label for="first_name"></label>
+          </div>
+
+          <div class="input-field col s5">
+            <input id="lastname" name='last' type="text" placeholder="Last Name">
+            <label for="last_name"></label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="email" name='email' type="email" placeholder="Email">
+            <label for="email"></label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="password" name='password' type="password" placeholder="Password">
+            <label for="password"></label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="password1" name='password1' type="password" placeholder="Confirm Password">
+            <label for="password1"></label>
+          </div>
+        </div>
+
+        <button class="btn waves-effect waves-light offset-4 cmdSubmit" type="submit" name="action">Submit
+          <i class="material-icons right">send</i>
+        </button>
+
+
+      </div>
+    </div>
+  </div>
+</form>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+  <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+
+  <!-- jQuery Validation cdn -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+
+  <script type="text/javascript">
+
+
+    sabio.page.startUp = () =>{  
+      $(".cmdSubmit").on("click", sabio.page.handlers.RegisterUser);
+
+      //jQuery Validation
+      sabio.page.initializeValidation();
+    };
+
+    /********  Handler *******/
+
+    sabio.page.handlers.RegisterUser = (event) => {
+
+     if($('.registerForm').valid()) {
+      event.preventDefault();
+      let data = sabio.page.RegisterData();
+      sabio.page.PostRegister(data, sabio.page.onSuccess, sabio.page.onError);
+      sabio.page.ClearForm();
+      };
+    };
+
+    /********  AJAX *******/
+
+    sabio.page.PostRegister = (data, onSuccess, onError) => {
+      let url = "https://pacoima-ypi.azurewebsites.net/api/users/register/employer";
+
+      let settings = {
+        cache: false,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: data,
+        dataType: "json",
+        type: "POST",
+        xhrFields: {
+          withCredentials: true
+        },
+        success: onSuccess,
+        error: onError
+      };
+
+      $.ajax(url, settings);
+    };
+
+
+    /********  Call Back *******/
+
+    sabio.page.onSuccess = (data) => {
+      console.log(data);
+      console.log("Data Confirm");
+      window.location.replace("login.html");
+    };
+
+    sabio.page.onError = (textStatus) => {
+      console.log(textStatus);
+      console.log("Too Bad!! Error! :(");
+    };
+
+    /********  Other  *******/
+
+    sabio.page.RegisterData = () => {
+      let UserData = {
+        Firstname: $("#firstname").val(),
+        Lastname: $("#lastname").val(),
+        Email: $("#email").val(),
+        Password: $("#password").val(),
+        Password1: $("#password1").val()
+      }
+      return UserData;
+    };
+
+    sabio.page.ClearForm = () => {
+      $(".registerForm")[0].reset();
+    };
+
+
+    //****************************** Validation *******************************//
+
+    sabio.page.initializeValidation = () => {
+      console.log("validation is ready")
+
+      jQuery.validator.setDefaults({
+        debug: true
+      });
+
+      $.validator.addMethod('passchk', (pass) => {
+        return /^(?=.*[0-9]).{6,}$/.test(pass);
+      });
+
+      let validationRules = {
+        "password": {
+          required: true,
+          minlength: 6,
+          maxlength: 15,
+          passchk: true
+        },
+        "password1": {
+          required: true,
+          minlength: 6,
+          maxlength: 15,
+          equalTo: "#password"
+        }
+      };
+
+      let validationMessages = {
+        "first": {
+          required: "Field cannot be empty."
+        },
+        "last": {
+          required: "Field cannot be empty."
+        },
+        "email": {
+          required: "Field requires an email"
+        },
+        "password": {
+          required: "I need a valid password.",
+          passchk: "Your password must contain at least 1 number"
+        },
+        "password1": {
+          required: "I need a valid password."
+        }
+      };
+
+      let validationOptions = {
+        rules: validationRules,
+        messages: validationMessages
+      };
+
+      $(".registerForm").validate(validationOptions);
+    };
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScriptTesting</title>
+    <meta name="viewport" content="width=device-width" />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="http://sabioapi2.azurewebsites.net/Content/jasmine/jasmine.css" rel="stylesheet" />
+    <link href="http://sabioapi2.azurewebsites.net/Content/labexercises/js-testing-labs.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div>
+
+
+
+
+<h2>Conditional Statements</h2>
+
+<div class="instructions col-xs-12">
+    <h3>Instructions</h3>
+    <ol class="list-group">
+        <li class="list-group-item">
+            <p>
+                Open the console in the browser and run the test <span class="b">sabioTester('condStatement')</span>. You will
+                now see the specs you need to test for. Use this function to perform tests.
+            </p>
+        </li>
+        <li class="list-group-item">
+            <p>
+                Create a function called <span class="b">sabio.page.isNumber</span> that takes a parameter and checks
+                if the <span class="i">type</span> of this parameter is an integer. If so, it should give back the bool
+                <span class="i">true</span> and if not <span class="i">false</span>.(You can use the one you wrote before).
+            </p>
+        </li>
+        <li class="list-group-item">
+            <p>
+                Write a function called <span class="b">sabio.page.greaterNumber</span> that takes two integers and
+                returns the greater number or if both are the same return the number. Use the <span class="i">sabio.page.isNumber</span>
+                to check if the parameters entered are integers and if not you sould return the message
+                <span class="b">'Please enter integers'</span>.
+            </p>
+        </li>
+        <li class="list-group-item">
+            <p>
+                Write a function called <span class="b">sabio.page.letterGrade</span> that takes a number and depending on
+                this number it converts it to the proper letter grades <span class="b">"A","B","C","D","F"</span>.
+                (For example the number score of 80 would represent 80 out of a 100 and would equal a "B"). Use the
+                <span class="i">sabio.page.isNumber</span> to check if the parameter entered is an integer. If it is
+                not an integer or if the value is not in the range of (0-100) you sould return the message
+                <span class="b">'Please enter an integer score between 0-100'</span>.
+            </p>
+        </li>
+        <li class="list-group-item">
+            <p>
+                Write a function called <span class="b">sabio.page.pluralizeNoun</span> that takes two parameters
+                first should be a noun and second a number. It should make the noun lower case and return the pluralized
+                form. Example <span class="b">"5 cats"</span> or <span class="b">"1 dog"</span>. Make it handle the collective
+                nouns <span class="b">person</span> (should be <span class="b">people)</span> and <span class="b">goose</span>
+                (should be <span class="b">geese</span>).
+            </p>
+        </li>
+    </ol>
+</div>
+
+
+
+
+    </div>
+
+    <!-- jquery -->
+    <script src="http://sabioapi2.azurewebsites.net/Scripts/jquery-2.1.3.min.js"></script>
+    <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+    <!--bootstrap-->
+    <script src="http://sabioapi2.azurewebsites.net/Scripts/bootstrap.min.js"></script>
+    <!-- jasmine -->
+    <script src="http://sabioapi2.azurewebsites.net/Scripts/jasmine/jasmine.js"></script>
+    <script src="http://sabioapi2.azurewebsites.net/Scripts/jasmine/jasmine-html.js"></script>
+    <script src="http://sabioapi2.azurewebsites.net/Scripts/jasmine/boot.js"></script>
+    <script src="http://sabioapi2.azurewebsites.net/Scripts/jasmine/jasmin-jquery.js"></script>
+
+
+    <script src="http://sabioapi2.azurewebsites.net/Scripts/labTests/sabio.tests.logging.js"></script>
+
+
+    <!--specs-->
+    <script src="http://sabioapi2.azurewebsites.net/Scripts/labTests/conditional.statements.spec.js"></script>
+
+
+    <!--Write your scripts below-->
+    <script>
+
+
+    sabio.page.isNumber = function(int){
+      if(Math.round(int) === int)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    };
+
+     sabio.page.greaterNumber = function(intA, intB){
+      if(sabio.page.isNumber(intA) && sabio.page.isNumber(intB))
+      {
+        return Math.max(intA, intB);
+      }
+     else
+     {
+       return "Please enter integers";
+     }
+   };
+
+   sabio.page.letterGrade = function(intA){
+       if(sabio.page.isNumber(intA) && intA >=0 && intA <= 100){
+
+         var letterGrade = "";
+         switch(true)
+         {
+           case intA >= 90:
+            letterGrade = "A";
+            break;
+
+           case intA >=80:
+            letterGrade = "B";
+            break;
+
+           case intA >=70:
+            letterGrade = "C";
+            break;
+
+           case intA >=60:
+            letterGrade = "D"
+            break;
+
+           default:
+            letterGrade = "F"
+         }
+         return letterGrade;
+       }
+       else
+       {
+         return "Please enter an integer score between 0-100";
+       }
+   }
+
+   sabio.page.pluralizeNoun = function(noun, numb){
+     noun.toLowerCase();
+
+     if (noun === "person" && numb > 1)
+     {
+      noun = "people";
+      return numb + " " + noun;
+     }
+     else if (noun === "goose" && numb >1 )
+     {
+       noun = "geese";
+      return numb + " " + noun;
+     }
+     else if (numb > 1)
+     {
+      return numb + " " + noun + "s";
+     }
+     else
+     {
+      return numb + " " + noun;
+     }
+   };
+
+
+    </script>
+
+
+
+</body>
+</html>

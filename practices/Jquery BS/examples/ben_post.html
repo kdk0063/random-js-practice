@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Week 0 CRUD</title>
+
+    <style>
+        body {
+            background-image: url("https://cdn.pixabay.com/photo/2016/11/21/12/39/cosmos-1845140_1280.jpg") !important;
+            ;
+        }
+
+        .users {
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 5px;
+            background-color: rgb(95, 46, 95);
+            width: 50%;
+            color: white;
+        }
+
+        .center {
+            text-align: center;
+            color: White;
+        }
+
+        .visibilityHidden {
+            visibility: hidden;
+        }
+
+        .displayNone {
+            display: none;
+        }
+
+        #total-form {
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 5px;
+            background-color: rgb(209, 189, 209);
+        }
+    </style>
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <div class="container" id="top">
+        <h1 class="center">Users Form</h1>
+        <div class="row">
+
+            <div class="col-md-8 userContainer">
+
+                <div class="listOfUsers">
+                    <br>
+                </div>
+
+                <br>
+
+                <div class="visibilityHidden" id="total-form">
+                    <h2>User Information</h2>
+                    <form id="input-form">
+
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="exampleName">First Name</label>
+                                <input name="first-name" type="text" class="form-control" id="first-name-input" placeholder="First Name">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="exampleName">Middle Initial</label>
+                                <input name="middle-initial" type="text" class="form-control" id="middle-initial-input" placeholder="Middle Initial">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="exampleAddress">Last Name</label>
+                                <input name="last-name" type="text" class="form-control" id="last-name-input" placeholder="Last Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleAddress">Email</label>
+                            <input name="email" type="email" class="form-control" id="email-input" placeholder="Email">
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="exampleAddress">Password</label>
+                                <input name="password" type="password" class="form-control" id="password-input" placeholder="Password">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="exampleAddress">Confirm Password</label>
+                                <input name="confirm-password" type="password" class="form-control" id="confirm-password-input" placeholder="Confirm Password">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="exampleAddress">Date of Birth</label>
+                                <input name="date-of-birth" type="date" class="form-control" id="date-of-birth-input" placeholder="Date of Birth">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="exampleInputPassword1">Phone Number</label>
+                                <input name="phone-number" type="number" class="form-control" id="phone-number-input" placeholder="Phone Number">
+                            </div>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input name="administrator" type="checkbox" id="administrator-input" value="">Administrator</label>
+                        </div>
+                        <button type="button" class="btn btn-primary pull-right" id="create-user-btn">Create User</button>
+                    </form>
+                </div>
+            </div>
+            <Br>
+
+            <div class="col-md-2">
+
+            </div>
+
+            <div class="col-md-4">
+                <button type="button" class="btn btn-warning pull-right" id="add-user-btn">Add User</button>
+            </div>
+        </div>
+
+        <script type="text/template" id="cloneItem">
+            <div class="users">                
+                <h5>Name: <span id="first-name-container"></span><span> </span><span id="last-name-container"></span></h5>
+                <h5>Username: <span id="user-name-container"></span></h5>   
+                <h5 class="ifAdministrator">Date of Birth: <span id="date-of-birth-container"></span></h5>
+                <h5 class="ifAdministrator">Password: <span id="password-container"></span></h5>
+                <h5>Phone: <span id="phone-container"></span></h5>
+                <input type="checkbox" id="administrator-container" value="">Administrator<Br>
+                <button type="button" class="btn btn-warning edit-btn">Edit</button>
+                <button type="button" class="btn btn-danger delete-btn">Delete</button>
+                <br>
+                <br>
+            </div>
+        </script>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+
+
+        <!--
+            <script src="./Scripts/jquery.validate.js"></script>
+       -->
+
+        <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+        <!-- All your code goes below here-->
+        <script type="text/javascript">
+
+            let url = "http://sabioapi2.azurewebsites.net/api/entities/bensusers/"
+            let currentId = null;
+            sabio.page.activeTask = null;
+
+            sabio.page.startUp = () => {
+
+                sabio.page.initializevalidation();
+
+                $.ajaxSetup({
+                    headers: { 'SABIO-AUTH': 'U7W1B8DR6' }
+                });
+
+                sabio.page.handlers.getAll();
+
+                $("#create-user-btn").on("click", sabio.page.handlers.createUser);
+                $("#add-user-btn").on("click", sabio.page.handlers.showForm);
+                $(".listOfUsers").on("click", ".edit-btn", sabio.page.handlers.getUserById);
+                $(".listOfUsers").on("click", ".delete-btn", sabio.page.handlers.deleteUser);
+            }
+
+            //Handlers ****************************************
+            sabio.page.handlers.getAll = () => {
+                $(".listOfUsers").empty();
+                sabio.page.getAllUsers(sabio.page.onGetAllUsersSuccess, sabio.page.onError);
+            }
+            sabio.page.handlers.showForm = () => {
+                $("#total-form").toggleClass("visibilityHidden")
+                sabio.page.scrollToForm();
+            }
+
+            sabio.page.handlers.createUser = () => {
+                if ($("#input-form").valid()) {
+                    let user = sabio.page.readInput();
+
+                    if (sabio.page.activeTask == null) {
+                        sabio.page.postUser(user, sabio.page.onPostUserSuccess, sabio.page.onError);
+                    }
+                    else {
+                        user.id = currentId;
+                        sabio.page.updateUser(user, sabio.page.onUpdateUserSuccess, sabio.page.onError);
+                    }
+                }
+                else {
+                    alert("You need to complete the form");
+                }
+            }
+
+            sabio.page.handlers.getUserById = function () {
+                currentId = $(this).closest(".users").attr("id");
+                sabio.page.getUser(currentId, sabio.page.onGetByIdSuccess, sabio.page.onError);
+            }
+
+            sabio.page.handlers.deleteUser = function () {
+                currentId = $(this).closest(".users").attr("id");
+                sabio.page.deleteUser(currentId, sabio.page.onDeleteUserSuccess, sabio.page.onError);
+            }
+
+            //Ajax Functions **********************************
+
+            sabio.page.getAllUsers = (onSuccess, onError) => {
+
+                const settings = {
+                    type: "GET"
+                    , success: onSuccess
+                    , error: onError
+                };
+
+                $.ajax(url, settings);
+            }
+
+            sabio.page.postUser = (obj, onSuccess, onError) => {
+
+                const settings = {
+                    type: "POST" //HTTP Verb
+                    , data: obj //Payload / body
+                    , contentType: "application/x-www-form-urlencoded; charset=UTF-8" //this is the default type for payload
+                    , dataType: "json" //type of data that we're getting back
+                    , success: onSuccess //Callback function when request is successful
+                    , error: onError //Callback function when request is unsuccessful
+                };
+
+                $.ajax(url, settings);
+            }
+
+            sabio.page.getUser = (id, onSuccess, onError) => {
+                const settings = {
+                    type: "GET"
+                    , success: onSuccess
+                    , error: onError
+                };
+
+                $.ajax(url + id, settings);
+            }
+
+            sabio.page.updateUser = (obj, onSuccess, onError) => {
+                const settings = {
+                    type: "PUT" //HTTP Verb
+                    , headers: {
+                        "SABIO-AUTH": "U7W1B8DR6"
+                    }
+                    , data: obj //Payload / body
+                    , contentType: "application/x-www-form-urlencoded; charset=UTF-8" //this is the default type for payload
+                    , dataType: "json" //type of data that we're getting back
+                    , success: onSuccess //Callback function when request is successful
+                    , error: onError //Callback function when request is unsuccessful
+                };
+
+                $.ajax(url + obj.id, settings);
+            }
+
+            sabio.page.deleteUser = (id, onSuccess, onError) => {
+                const settings = {
+                    type: "DELETE"
+                    , success: onSuccess
+                    , error: onError
+                };
+
+                $.ajax(url + id, settings);
+            }
+
+            //Call Back Functions****************************
+            sabio.page.onGetAllUsersSuccess = data => {
+
+                if (data && data.items) {
+                    for (let i = 0; i < data.items.length; i++) {
+
+                        var clone = sabio.page.getClone();
+
+                        clone.attr("id", data.items[i].id);
+
+                        $("#first-name-container", clone).text(data.items[i].firstName);
+                        $("#last-name-container", clone).text(data.items[i].lastName[0] + ".");
+                        $("#user-name-container", clone).text(data.items[i].username);
+                        $("#date-of-birth-container", clone).text(data.items[i].dateOfBirth);
+                        $("#password-container", clone).text(sabio.page.hidePassword(data.items[i].password));
+
+                        if (data.items[i].phoneNumber) {
+                            let number = data.items[i].phoneNumber;
+                            let newNumber = number.slice(0, 3) + "-" + number.slice(3, 6) + "-" + number.slice(6, 10);
+                            $("#phone-container", clone).text(newNumber);
+                        }
+                        else {
+                            $("#phone-container", clone).text("N/A");
+                        }
+
+                        data.items[i].administrator == "true" ?
+                            $("#administrator-container", clone).prop("checked", true) : $(".ifAdministrator", clone).addClass("displayNone")
+
+                        $(".listOfUsers").append(clone);
+                    }
+                }
+                sabio.page.scrollToList();
+
+            }
+
+            sabio.page.onGetByIdSuccess = function (data) {
+
+                sabio.page.activeTask = $(this);
+
+                $("#total-form").removeClass("visibilityHidden");
+                $("#first-name-input").val(data.item.firstName);
+                $("#middle-initial-input").val(data.item.middleInitial);
+                $("#last-name-input").val(data.item.lastName);
+                $("#email-input").val(data.item.email);
+                $("#password-input").val(data.item.password);
+                $("#confirm-password-input").val(data.item.password);
+                $("#date-of-birth-input").val(data.item.dateOfBirth);
+                $("#phone-number-input").val(data.item.phoneNumber);
+
+                data.item.administrator == "true" ?
+                    $("#administrator-input").prop("checked", true) : $("#administrator-input").prop("checked", false);
+
+                $(".listOfUsers").addClass("displayNone");
+
+                $("#create-user-btn").text("Update User");
+            }
+
+            sabio.page.onPostUserSuccess = () => {
+                sabio.page.clearForm();
+                sabio.page.handlers.getAll();
+            }
+
+            sabio.page.onUpdateUserSuccess = function () {
+                sabio.page.clearForm();
+                sabio.page.handlers.getAll();
+                sabio.page.currentId = null;
+                $(".listOfUsers").removeClass("displayNone");
+                $("#create-user-btn").text("Create User");
+            }
+
+            sabio.page.onDeleteUserSuccess = () => {
+                $("#" + currentId).remove();
+                sabio.page.currentId = null;
+            }
+
+            sabio.page.onError = () => console.log("Your ajax call doesn't work");
+
+
+            // Misc *******************************************
+            sabio.page.readInput = () => {
+                let email = $("#email-input").val()
+                let username = email.slice(0, email.indexOf("@"))
+                return {
+                    firstName: pascalFunction($("#first-name-input").val())
+                    , middleInitial: $("#middle-initial-input").val().toUpperCase()
+                    , lastName: pascalFunction($("#last-name-input").val())
+                    , email: email
+                    , password: $("#password-input").val()
+                    , dateOfBirth: $("#date-of-birth-input").val()
+                    , phoneNumber: $("#phone-number-input").val()
+                    , administrator: $("#administrator-input").prop("checked")
+                    , username: username
+                }
+            }
+
+            sabio.page.getClone = () => $($("#cloneItem").html())
+
+            sabio.page.clearForm = () => $("form")[0].reset();
+
+            const pascalFunction = stringOne => {
+                let stringTwo = stringOne.toLowerCase();
+                let stringThree = stringTwo.replace(stringTwo[0], stringTwo[0].toUpperCase())
+                return stringThree;
+            }
+
+            sabio.page.hidePassword = pwd => pwd.slice(0, 4) + pwd.slice(4, pwd.length).replace(/./g, "*");
+
+            sabio.page.scrollToForm = function () {
+                var topOfForm = $("#total-form").offset().top;
+                var animateOptions = {
+                    scrollTop: topOfForm
+                }
+                $("html, body").animate(animateOptions, 1500);
+            }
+
+            sabio.page.scrollToList = function () {
+                var topOfForm = $("#top").offset().top;
+                var animateOptions = {
+                    scrollTop: topOfForm
+                }
+                $("html, body").animate(animateOptions, 1500);
+            }
+
+            //Validation**************************************
+            sabio.page.initializevalidation = () => {
+                jQuery.validator.setDefaults({
+                    debug: true
+                });
+
+                let validationRules = {
+                    "first-name": {
+                        required: true
+                        , rangelength: [2, 50]
+                    }
+                    , "middle-initial": {
+                        maxlength: 1
+                    }
+                    , "last-name": {
+                        required: true
+                        , rangelength: [2, 50]
+                    }
+                    , "email": {
+                        required: true
+                        , email: true
+                    }
+                    , "password": {
+                        required: true
+                        , rangelength: [8, 15]
+                    }
+                    , "confirm-password": {
+                        required: true
+                        , equalTo: "#password-input"
+                    }
+                    , "date-of-birth": {
+                        required: true
+                    }
+                    , "phone-number": {
+                        digits: true
+                        , minlength: 10
+                        , maxlength: 10
+                    }
+                };
+                let validationMessages = {
+                    "first-name": {
+                        required: "First name is required"
+                    }
+                    , "last-name": {
+                        required: "Last name is required"
+                    }
+                };
+
+                let validationOptions = {
+                    rules: validationRules
+                    , messages: validationMessages
+                }
+
+                $("#input-form").validate(validationOptions);
+            }
+
+        </script>
+
+</body>
+
+</html>

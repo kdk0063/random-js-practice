@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="row divBtn">
+
+        <div class="col-xs-12">
+
+            <!-- this is where I would put buttons -->
+
+        </div> <!--column -->
+
+    </div> <!--row -->
+
+    <div class="row divForm">
+
+
+        <form id="frmInput">
+
+            <div class="row"> <!--Name Row-->
+
+                <div class="col-xs-12 col-sm-6">
+
+                    <input id="inputFirstName" type="text" class="form-control" placeholder="First Name" value="Rock">
+
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+
+                    <input id="inputLastName" type="text" class="form-control" placeholder="Last Name" value="The">
+                    <br>
+
+                </div>
+
+            </div> <!--Name Row-->
+
+            <div class="row"> <!--Age | Salary -->
+
+                <div class="col-xs-12 col-sm-4"> <!--Age-->
+
+                    <input id="inputAge" type="number" class="form-control" placeholder="Age" value="30">
+                    <br>
+
+                </div>
+
+                <div class="col-xs-12 col-sm-4"> <!--Age-->
+
+                    <input id="inputSalary" type="number" class="form-control" placeholder="Salary" value="50050">
+                    <br>
+
+                </div>
+
+
+            </div> <!--Age | Salary -->
+
+
+        </div> <!--row -->
+
+    </form>
+
+    <div>
+
+        <button id="btnUpdate" type="button" class="btn">Update</button>
+        <button id="btnGetAuthors" type="button" class="btn">Get Authors</button>
+        <button id="btnSubmit" type="button" class="btn">Submit</button>
+
+    </div>
+
+    <div class="row divOutput">
+
+        <hr>
+        <!-- this is where I would put additions to the DOM-->
+        <!-- <ul id="landing">
+
+        </ul>o -->
+
+    </div> <!--row -->
+
+  </div> <!-- container -->
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+
+  <!-- if I have templates, there is where I put them.  Make sure to put either a class or an ID-->
+    <script type="text/template" id="template">
+
+        <div class="col-xs-12">
+
+            <p>Name: <span class="outputLastName"></span>,  <span class="outputFirstName"></span></p>
+            <p>Age: <span class="outputAge"></span></p>
+            <p>Salary: <span class="outputSalary"></span></p>
+            <button class="btnEdit btn" type="button">Edit</button>
+            <button class="btnDelete btn" type="button">Delete</button>
+            <hr>
+
+        </div> <!--column -->
+
+    </script>
+
+
+  <!-- write your code here -->
+    <script type="text/javascript">
+
+        sabio.page.startUp = function () {
+
+            //Wire up your buttons here
+            $( "#btnUpdate" ).on("click", sabio.page.handlers.cmdUpdate);
+            $( "#btnSubmit" ).on("click", sabio.page.handlers.cmdSubmit);
+            $( "#btnGetAuthors" ).on("click", sabio.page.handlers.getAuthors);
+            $( ".divOutput" ).on("click", "button.btnEdit", sabio.page.handlers.cmdAddDataToForm);
+            $( ".divOutput" ).on("click", "button.btnDelete", sabio.page.handlers.cmdRemoveEntry);
+
+        };
+
+        // Handlers ***************************************************
+        // ************************************************************
+        sabio.page.handlers.cmdSubmit = function(event) {
+
+            event.preventDefault();
+
+            // window.alert("cmdSubmit");
+            var author = sabio.page.fetchFormData();
+            sabio.page.postAuthors(author, sabio.page.onSubmitAuthorSuccess, sabio.page.onError);
+
+        };
+
+        sabio.page.handlers.cmdUpdate = function(event) {
+
+            event.preventDefault();
+
+            var author = sabio.page.fetchFormData();
+            author.id = sabio.page.authorId
+
+            sabio.page.putSingularAuthor(
+                sabio.page.authorId
+                , author
+                , sabio.page.onPutSingleAuthorSuccess
+                , sabio.page.onError
+            );
+
+        };
+
+        sabio.page.handlers.getAuthors = function() {
+
+            sabio.page.getAuthors(sabio.page.onGetAuthorSuccess, sabio.page.onError);
+
+        };
+
+        sabio.page.handlers.cmdAddDataToForm = function() {
+
+            // window.alert($(this).closest("div").attr("id"))
+
+            sabio.page.getSingularAuthor(
+
+                $(this).closest("div").attr("id")
+                , sabio.page.onGetSingleAuthorSuccess
+                , sabio.page.onError
+
+                );
+
+        };
+
+        sabio.page.handlers.cmdRemoveEntry = function() {
+
+            window.alert("cmd");
+
+        };
+
+        sabio.page.fetchFormData = function() {
+
+            var authorData = {
+                firstName: $( "#inputFirstName" ).val()
+                , lastName: $( "#inputLastName" ).val()
+                , age: $( "#inputAge" ).val()
+                , salary: $( "#inputSalary" ).val()
+
+            };
+
+            // window.alert(authorData.firstName);
+            // window.alert(authorData.lastName);
+            // window.alert(authorData.age);
+            // window.alert(authorData.salary);
+
+            return authorData;
+
+        };
+
+        sabio.page.addDataToDom = function(author) {
+
+            // window.alert("addtodom");
+
+            // fetch template
+            var addToDom = $( $( "#template" ).html());
+
+            addToDom.find( ".outputLastName" ).text(author.lastName);
+            addToDom.find( ".outputFirstName" ).text(author.firtName);
+            addToDom.find( ".outputAge" ).text(author.age);
+            addToDom.find( ".outputSalary" ).text(author.salary);
+            addToDom.attr( "id", author.id);
+
+            $( ".divOutput" ).append(addToDom);
+
+        };
+
+        // Callback Functions *****************************************
+        // ************************************************************
+        sabio.page.onError = function(xhr, textStatus, error) {
+
+            console.log(textStatus);
+
+        };
+
+        sabio.page.onSubmitAuthorSuccess = function (data, textStatus, xhr) {
+
+            console.log(data);
+            $( "#frmInput" )[0].reset();
+
+        };
+
+
+        sabio.page.onGetAuthorSuccess = function(data) {
+
+            // window.alert(data.items.length);
+            // console.log(data.length);
+
+            for (var i=0; i<data.items.length; i++) {
+
+                sabio.page.addDataToDom(data.items[i]);
+
+            };
+
+        };
+
+        sabio.page.onGetSingleAuthorSuccess = function(data) {
+
+            // window.alert(data.item.firtName);
+            $( "#inputFirstName" ).val(data.item.firtName);
+            $( "#inputLastName" ).val(data.item.lastName);
+            $( "#inputAge" ).val(data.item.age);
+            $( "#inputSalary" ).val(data.item.salary);
+
+            sabio.page.authorId = data.item.id;
+
+        };
+
+        sabio.page.onPutSingleAuthorSuccess = function(data) {
+
+            console.log("PUT done");
+
+        };
+
+        // Ajax ***************************************************
+        // ************************************************************
+        sabio.page.postAuthors = function (authData, onSuccess, onError) {
+            //authData = payload
+            //onSuccess/onError = callback functions
+
+            var url = "http://sabioapi2.azurewebsites.net/api/authors";
+
+            var settings = {
+
+                headers: { 'SABIO-AUTH': 'U7CEJQ589' },
+                cache: 'false',
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                data: authData, // AJAX property specific "payload"
+                dataType: "Json",
+                success: onSuccess,
+                error: onError,
+                type: "POST"
+
+            };
+
+            $.ajax(url, settings);
+        };
+
+        sabio.page.getAuthors = function (onSuccess, onError) {
+
+            var url = "http://sabioapi2.azurewebsites.net/api/authors";
+
+            var settings = {
+                headers: { 'SABIO-AUTH': 'U7CEJQ589' },
+                cache: 'false',
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8", // contract of payload
+                dataType: "Json",   // Contract for response
+                success: onSuccess, // Example of callback function (placeholder atm)
+                error: onError,     // Example of callback function (placeholder atm)
+                type: "GET",        // HTTP Method / Verb
+
+            };
+
+            // This is the actual AJAX call
+            $.ajax(url, settings);
+        };
+
+        sabio.page.getSingularAuthor = function (id, onSuccess, onError) {
+
+            var url = "http://sabioapi2.azurewebsites.net/api/authors" + "/" + id;
+
+            var settings = {
+                headers: { 'SABIO-AUTH': 'U7CEJQ589' },
+                cache: 'false',
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8", // contract of payload
+                dataType: "Json",   // Contract for response
+                success: onSuccess, // Example of callback function (placeholder atm)
+                error: onError,     // Example of callback function (placeholder atm)
+                type: "GET",        // HTTP Method / Verb
+
+            };
+
+            // This is the actual AJAX call
+            $.ajax(url, settings);
+        };
+
+        sabio.page.putSingularAuthor = function (id, author, onSuccess, onError) {
+
+            var url = "http://sabioapi2.azurewebsites.net/api/authors" + "/" + id;
+
+            var settings = {
+                headers: { 'SABIO-AUTH': 'U7CEJQ589' },
+                cache: 'false',
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8", // contract of payload
+                data: author,
+                dataType: "Json",   // Contract for response
+                success: onSuccess, // Example of callback function (placeholder atm)
+                error: onError,     // Example of callback function (placeholder atm)
+                type: "PUT",        // HTTP Method / Verb
+
+            };
+
+            // This is the actual AJAX call
+            $.ajax(url, settings);
+        };
+
+
+    </script>
+
+</body>
+</html>

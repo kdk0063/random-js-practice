@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- STYLESHEETS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        body,
+        html {
+            background: url('img/background.png');
+            min-height: 100vh;
+        }
+
+        .formCard {
+            padding: 0 25px;
+            display: none;
+            margin: 10px 0;
+        }
+
+        h5 {
+            margin: 10px 0;
+        }
+
+        .marginMe {
+            margin-top: 100px;
+            
+        }
+
+        .userInfoName {
+            color: #333;
+            font-size: 3em;
+        }
+
+        .input-field label {
+            position: relative;
+        }
+    </style>
+
+    <title>User Form</title>
+</head>
+
+<body>
+
+    <div class="container valign-wrapper">
+        <div class="row">
+            <div class="card formCard">
+                <div class="card-content black-text">
+                    <h3 class="userInfoName">User Info</h3>
+                    <br>
+                    <div class="row">
+                        <form class="col s12" id="userForm">
+                            <div class="row">
+                                <div class="input-field col s5">
+                                    <input id="first_name" name='first' type="text" placeholder="First Name">
+                                    <label for="first_name"></label>
+                                </div>
+
+                                <div class="input-field col s2">
+                                    <input id="middle_name" type="text" name="middle" placeholder="Initial">
+                                    <label for="middle_name"></label>
+                                </div>
+
+                                <div class="input-field col s5">
+                                    <input id="last_name" name='last' type="text" placeholder="Last Name">
+                                    <label for="last_name"></label>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="email" name='email' type="email" placeholder="Email">
+                                    <label for="email"></label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="password" name='password' type="password" placeholder="Password">
+                                    <label for="password"></label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="password1" name='password1' type="password" placeholder="Confirm Password">
+                                    <label for="password1"></label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="dob" name='dob' type="text" class="datepicker" placeholder="Date of Birth">
+                                    <label for="dob"></label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="telephone" name='telephone' type="text" placeholder="Telephone Number">
+                                    <label for="telephone"></label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <p class="col s12 right-align">
+                                    <input type="checkbox" name="admin" id="admin" />
+                                    <label for="admin">Administrator</label>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card-action">
+                    <div class="row">
+                        <div class="col s6">
+                            <button id="btnSubmit" class="btn blue darken-2 waves-effect waves-light" type="submit">Create User
+                                <i class="left material-icons">person</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container ">
+            <div class="row marginMe">
+
+            </div>
+        </div>
+
+        <div class="fixed-action-btn">
+            <button id="newUser" class="btn-floating btn-large pulse red waves-effect waves-light">
+                <i class="large material-icons">add</i>
+            </button>
+        </div>
+
+        <script type="text/template" id="template">
+                <div class="col s4">
+                    <div class="card grey">
+                        <div class="card-content white-text">
+                            <span class="card-title">User</span>
+
+                            <p class="black-text">Name: <span class="name white-text"></span></p>
+
+                            <p class="black-text">User Name: <span class="userName white-text"></span></p>
+
+                            <p class="black-text">Date of Birth: <span class="dateOfBirth white-text"></span></p>
+
+                            <p class="black-text">Password: <span class="revPassword white-text"></span></p>
+
+                            <p class="black-text">Phone #: <span class="phoneNumber white-text"></span></p>
+                        </div>
+                        <div class="card-action">
+                            <button class="btn yellow darken-2 waves-effect waves-light">Edit</button>
+                            <button class="btn red darken-2 waves-effect waves-light">Delete</button>
+                        </div>
+                    </div>
+                </div>
+        </script>
+
+        <!-- SCRIPTS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+        <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+        
+        
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!--
+        <script src="..random/scripts/jquery.validate.min.js"></script> -->
+
+        <!-- OUR JS -->
+        <script>
+
+
+            sabio.page.startUp = () => {
+                console.log("Fired up and ready to go!");
+
+                // AJAX START UP
+                $.ajaxSetup({
+                    headers: {
+                        'SABIO-AUTH': 'U7D46T5E1'
+                    }
+                });
+
+                //JQUERY VALIDATION
+                //sabio.page.initValidation();
+
+                //GET REQUEST TO SHOW ITEMS ON LOAD
+                sabio.page.getUsersFromApi(sabio.page.onGetSuccess, sabio.page.onError);
+                // Controls and initializes DOB picker.
+                $('.datepicker').pickadate({
+                    selectMonths: true,
+                    selectYears: 100,
+                    today: 'Today',
+                    clear: 'Clear',
+                    close: 'Ok',
+                    closeOnSelect: false
+                });
+
+                $('#btnSubmit').on('click', sabio.page.handlers.submitForm);
+                $('#newUser').on('click', sabio.page.handlers.createNewUser);
+
+            };
+
+            /****************************** HANDLERS *******************************/
+            sabio.page.handlers.submitForm = (e) => {
+                let data = sabio.page.formData();
+                e.preventDefault();
+                console.log(data);
+
+                //if ($('#userForm').valid()) {
+                    sabio.page.postForm(data, sabio.page.onSuccess, sabio.page.onError);
+
+                    $('#userForm')[0].reset();
+                    $('.formCard').fadeOut();
+                }
+            //};
+
+            sabio.page.handlers.createNewUser = (e) => {
+                e.preventDefault();
+
+                $(".marginMe").fadeOut();
+                $('.formCard').fadeIn();
+
+            };
+
+            /****************************** Template *******************************/
+            sabio.page.loadTemplate = () => {
+                let html = $($('#template').html());
+
+                return html;
+            };
+
+            sabio.page.writeToTemplate = (data) => {
+                let html = sabio.page.loadTemplate();
+
+                html.find('.name').text(sabio.page.pascalMe(data.firstName) + ' ' + sabio.page.abbrString(sabio.page.pascalMe(data.lastName)));
+                html.find('.userName').text(sabio.page.createUserName(data.email));
+                html.find('.dateOfBirth').text(data.dob);
+                html.find('.revPassword').text(sabio.page.fixPass(data.password));
+                html.find('.phoneNumber').text(sabio.page.fixTele(data.tele));
+                html.attr('id', data.id);
+
+                $('.marginMe').append(html);
+            }
+
+            
+            /****************************** Objects *******************************/
+
+            sabio.page.formData = () => {
+                let frmObj = {
+                    firstName: $('#first_name').val(),
+                    middleName: $('#middle_name').val(),
+                    lastName: $("#last_name").val(),
+                    email: $("#email").val(),
+                    password: $("#password").val(),
+                    confirmPassword: $('#password1').val(),
+                    dob: $('#dob').val(),
+                    tele: $('#telephone').val(),
+                    admin: $('#admin').is(':checked')
+                }
+
+                return frmObj;
+            };
+
+            /****************************** AJAX *******************************/
+
+            sabio.page.postForm = (data, onSuccess, onError) => {
+
+                let url = 'http://sabioapi2.azurewebsites.net/api/entities/davidsusers/';
+
+                let settings = {
+                  
+                    cache: false,
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    dataType: "json",
+                    success: onSuccess,
+                    error: onError,
+                    type: "POST"
+                }
+
+                $.ajax(url, settings)
+            };
+
+            sabio.page.getUsersFromApi = (onSuccess, onError) => {
+                let url = 'http://sabioapi2.azurewebsites.net/api/entities/davidsusers';
+
+                let settings = {
+                    cache: false,
+                    contentType: " application/x-www-form-urlencoded",
+                    dataType: "json",
+                    success: onSuccess,
+                    error: onError,
+                    type: "GET"
+                }
+
+                $.ajax(url, settings)
+            }
+
+            /****************************** Validation *******************************/
+            
+            /*
+            sabio.page.initValidation = () => {
+
+            
+                jQuery.validator.setDefaults({
+                    debug: true
+                
+
+                let validationRules = {
+                    "first": {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 50
+                    },
+                    "last": {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 50
+                    },
+                    "email": {
+                        required: true
+                    },
+                    "password": {
+                        required: true,
+                        minlength: 8,
+                        maxlength: 15
+                    },
+                    "password1": {
+                        required: true,
+                        minlength: 8,
+                        maxlength: 15,
+                        equalTo: "#password"
+                    },
+                    'dob': {
+                        required: true
+                    }
+                };
+                let validationMessages = {
+                    "first": {
+                        required: "Field cannot be empty."
+                    },
+                    "last": {
+                        required: "Field cannot be empty."
+                    },
+                    "email": {
+                        required: "Field requires an email"
+                    },
+                    "password": {
+                        required: "I need a valid password."
+                    },
+                    "password1": {
+                        required: "I need a valid password."
+                    },
+                    "dob": {
+                        required: "What's your birth date?"
+                    }
+                };
+
+
+                let validationOptions = {
+                    rules: validationRules,
+                    messages: validationMessages
+                };
+
+                $("#userForm").validate(validationOptions);
+            };
+            */
+        </script>
+</body>
+
+</html>

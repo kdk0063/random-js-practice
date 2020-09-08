@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+    <title>Get Book Pictures</title>
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <h1>Google Books</h1>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+   
+  
+    <!-- All your HTML code goes below here-->
+
+    <div class="container">
+      <div class="col-md-4">
+        <div class="col-xl-1 userInfo"></div>
+          <input type="text" id="search" placeholder="search"> 
+          <button type="button" class="btn btn-success cmdSearch">Search</button>   
+        </div>
+      </div>
+    
+    </div>
+
+
+    <script type="text/javascript">
+
+sabio.page.startUp = () =>{
+  console.log("it is ready");
+  $(".cmdSearch").on("click", sabio.page.handlers.displayPic);  
+};
+
+ 
+/************************* Handler Function ***********************/
+sabio.page.handlers.displayPic = function (event){
+  console.log("button is working");
+  event.preventDefault();
+  var user = sabio.page.readForm();
+  sabio.page.getBookPic(user, sabio.page.onBookPicSuccess, sabio.page.onError);
+};      
+
+
+/************************* Other Function  ***********************/
+  
+
+sabio.page.readForm = function () { 
+  var books = 
+    { 
+      title: $("#search").val(),
+      author: ""
+    }
+  return books;
+};      
+
+
+/************************* AJAX Call ***********************/
+
+sabio.page.getBookPic = (user, onSuccess, onError) =>{
+  let url = "https://www.googleapis.com/books/v1/volumes?q=" + user.title;
+  
+  let settings = 
+  {
+    cache: false,
+    data: user,
+    success: onSuccess,
+    error: onError,
+    type: "GET"   
+  };
+  
+  $.ajax(url, settings);
+};
+
+
+/************************* Callback Function  ***********************/      
+
+sabio.page.onBookPicSuccess = (data) => {
+    //let books = sabio.page.readForm();
+    //console.log(books);
+    for (var i = 0; i < 10; i++)
+    {
+      $(".container").append("<img src=\"" + data.items[i].volumeInfo.imageLinks.thumbnail + "\">");
+    }
+};
+
+sabio.page.onError = (status) => {
+  console.log(status);
+};
+
+
+
+
+
+
+
+
+  
+</script>
+
+
+
+</body>
+</html>

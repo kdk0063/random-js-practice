@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+  <style>
+    body {
+
+      background: url('img/christmas-dark/christmas-dark.png');
+      min-height: 100%;
+      background-size: fixed;
+    }
+
+    .button {
+      margin-top: 30px;
+      padding: 10px 10px;
+      font-size: 15px;
+      text-align: center;
+      cursor: pointer;
+      outline: none;
+      color: #fff;
+      background-color: #4CAF50;
+
+      border-radius: 10px;
+      box-shadow: 0 10px #999;
+    }
+
+    .button:hover {
+      background-color: #3e8e41
+    }
+
+    .button:active {
+      background-color: #3e8e41;
+      box-shadow: 0 5px #666;
+      transform: translateY(4px);
+    }
+
+    .userInput {
+      display: none;
+      float: none;
+      margin-top: 80px;
+      margin-bottom: 50px;
+    }
+
+    label {
+      color: darkgreen;
+    }
+
+    .btn-collapsible {
+      overflow: hidden;
+    }
+    
+    .user{
+      margin-bottom: 25px;
+    }
+    
+    #cmdDisplay{
+      border-radius: 10px;
+   
+    }
+      
+    .glyphicon-flash{
+      font-size: 15px;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 10px #999;
+    }
+    
+    
+      
+      
+  </style>
+
+  <!-- STYLESHEETS -->
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css'>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <title>POST USER</title>
+
+</head>
+
+
+<body>
+
+  <div class="container">
+    <div class="row justify-content-end">
+      <button id="btnAdd" class="button"> Add User </button>
+    </div>
+  </div>
+
+<form id="newForm">
+  <div class="container userInput">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label>First Name </label>
+        <input class="form-control" id="inputFN" name="first" placeholder="First Name">
+      </div>
+
+      <div class="form-group col-sm-2">
+        <label for="inputPassword4">Middle Initial </label>
+        <input class="form-control" id="inputMI" name="middle" placeholder="Middle Initial">
+      </div>
+
+      <div class="form-group col-md-4">
+        <label>Last Name </label>
+        <input class="form-control" id="inputLN" name="last" placeholder="Last Name">
+      </div>
+
+      <div class="form-group col-md-10">
+        <label>Email </label>
+        <input type="text" class="form-control" id="inputEmail" name="email" placeholder="Email">
+      </div>
+
+      <div class="form-group col-md-10">
+        <label>Password </label>
+        <input type="text" class="form-control" id="inputPW" name="password" placeholder="Password">
+      </div>
+
+
+      <div class="form-group col-md-10">
+        <label>Confirm Password </label>
+        <input type="text" class="form-control" id="inputConfirmPW" name="password1" placeholder="Confirm Password">
+      </div>
+
+      <div class="form-group col-md-10">
+        <label>Date of Birth</label>
+        <input type="date" id="inputDOB" name="dob" class="form-control">
+      </div>
+
+      <div class="form-group col-md-10">
+        <label>Phone Number</label>
+        <input type="text" class="form-control" id="inputPhone" name="phone" placeholder="xxx-xxx-xxxx">
+      </div>
+    </div>
+
+    <input type="checkbox" name="admin" id="admin" />
+    <label for="admin">Administrator</label>
+    <br>
+
+    <button id="cmdDisplay" class="button btn-info">
+    <i class="glyphicon glyphicon-search"></i>
+    Display Users
+    </button>
+
+    <button id="cmdCretate" class="button">
+    <i class="fa fa-check"></i>
+    Create User
+    </button>
+   </div>
+  </form>
+
+
+  <!-- GET data container -->
+   <div class="container">
+    <div class="row GetData">
+
+    </div>
+  </div>
+  
+
+
+  <!---- all the JS ---->
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+  <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+  
+  <!-- jQuery Validation cdn -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+
+  <script type="text/javascript">
+    sabio.page.currentUser = null;
+    sabio.page.userPostTemp = null;
+    sabio.page.editMode = null;
+
+    sabio.page.startUp = () => {
+      
+      //jQuery VALIDATION
+      sabio.page.initializeValidation();
+      
+      console.log("Fired up and ready to go!");
+      
+      $("#btnAdd").on("click", sabio.page.handlers.AddUser);
+      $("#cmdCretate").on("click", sabio.page.handlers.PostUser);
+      $("#cmdDisplay").on("click", sabio.page.handlers.GetUsers);
+      $(".GetData").on("click", "#cmdEdit", sabio.page.handlers.EditaData);
+      $(".GetData").on("click", "#cmdDelete", sabio.page.handlers.DeleteData);
+      
+     
+    };
+
+
+
+    //********************* HANDLERS ********************//
+    sabio.page.handlers.AddUser = (e) => {
+      e.preventDefault();
+      $(".userInput").toggle(700);
+    };
+
+    sabio.page.handlers.PostUser = (e) => {
+      e.preventDefault();
+      if ($("#newForm").valid()){
+      
+        
+        if (sabio.page.editMode == null) { 
+        let data = sabio.page.UserObj();
+        sabio.page.postForm(data, sabio.page.onSuccess, sabio.page.onError);
+        sabio.page.clearForm();   
+        }
+        
+      else{
+       let data = sabio.page.UserObj();
+       let id = sabio.page.currentUser;
+       data.id = id;
+       sabio.page.UpdateUser(id, data, sabio.page.onSuccess, sabio.page.onError);
+       sabio.page.clearForm();   
+      }
+     };
+    }
+
+    sabio.page.handlers.GetUsers = (e) => {
+      //$(".userInput").hide();
+      e.preventDefault();
+      sabio.page.getUsers(sabio.page.onGetSuccess, sabio.page.onError);
+    };
+
+    sabio.page.handlers.EditaData = function() {
+      
+      let id = $(this).closest(".user").attr("id");
+      sabio.page.currentUser = id;
+
+      //$(".GetData").hide();
+      //$(".userInput").show();
+     
+      sabio.page.editUser(id, sabio.page.editUserById, sabio.page.onError);
+      
+      $("#cmdCretate").text("Update Profile")
+      sabio.page.editMode = true;
+      console.log("lets edit");
+    };
+    
+    sabio.page.handlers.DeleteData = function(){
+      let id = $(this).closest(".user").attr("id");
+      sabio.page.userPostTemp = $(this).closest(".user");
+      $("#cmdCretate").text("Update Profile")  
+      sabio.page.deleteUser(id, sabio.page.deleteById, sabio.page.onError );
+    }
+
+
+
+    //********************* Other ********************//
+    sabio.page.UserObj = () => {
+      let frmObj = {
+        firstName: $("#inputFN").val(),
+        middleIni: $("#inputMI").val(),
+        lastName: $("#inputLN").val(),
+        Email: $("#inputEmail").val(),
+        PassWord: $("#inputPW").val(),
+        ConPassWord: $("#inputConfirmPW").val(),
+        Birthday: $("#inputDOB").val(),
+        Phone: $("#inputPhone").val(),
+        Admin: $("#admin").is(".checked")
+      }
+      return frmObj;
+    };
+  
+    let data = sabio.page.UserObj();
+
+    sabio.page.loadTemplate = () => {
+      let pTemp = $($("#template").html());
+
+      return pTemp;
+    }
+
+    sabio.page.loopThroughUsers = (users) => {
+      for (let i = 0; i < users.length; i++) {
+        sabio.page.postTemp(users[i]);
+        console.log("Looping Complete");
+      }
+    };
+
+    sabio.page.postTemp = (data) => {
+      let pTemp = sabio.page.loadTemplate();
+      pTemp.find(".name").text((data.firstName) + " " + (data.lastName));
+      pTemp.find(".userName").text(data.Email);
+      pTemp.find(".phoneNumber").text(data.Phone);
+      pTemp.find(".dateOfBirth").text(data.Birthday);
+      pTemp.find(".revPassword").text(data.PassWord);
+      pTemp.attr("id", data.id);
+
+      $(".GetData").append(pTemp);
+    };
+    
+    sabio.page.clearForm = () => {
+      $("#newForm")[0].reset();
+
+    };
+
+
+    //********************* AJAX ********************//
+
+    sabio.page.postForm = (data, onSuccess, onError) => {
+
+      let url = "http://sabioapi2.azurewebsites.net/api/entities/Andrewusers";
+
+      let settings = {
+        headers: {
+          'SABIO-AUTH': 'U6YNWCSCC'
+        },
+        cache: 'false',
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8", //content type type of content you're sending
+        data: data, //ajax property specific "payload"
+        dataType: "Json", // data type we are getting back
+        success: onSuccess,
+        error: onError,
+        type: "POST"
+      }
+      $.ajax(url, settings);
+    };
+
+    sabio.page.getUsers = (onSuccess, onError) => {
+      let url = "http://sabioapi2.azurewebsites.net/api/entities/Andrewusers";
+
+      let settings = {
+        headers: {
+          'SABIO-AUTH': 'U6YNWCSCC'
+        },
+        cache: false,
+        contentType: "application/x-www-form-urlencoded",
+        dataType: "json",
+        success: onSuccess,
+        error: onError,
+        type: "GET"
+      }
+      $.ajax(url, settings)
+    };
+
+
+    sabio.page.editUser = (id, onSuccess, onError) => {
+      let url = "http://sabioapi2.azurewebsites.net/api/entities/Andrewusers/" + id;
+
+      let settings = {
+        headers: {
+          'SABIO-AUTH': 'U6YNWCSCC'
+        },
+        cache: 'false',
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        dataType: "Json", // how data is coming back
+        success: onSuccess, //this is a callback function
+        error: onError, // this is a callback function
+        type: "GET", // http method/verb
+
+      };
+      // this is the actual ajax call
+      $.ajax(url, settings);
+    };
+    
+    sabio.page.deleteUser = (id, onSuccess, onError) => {
+      let url = "http://sabioapi2.azurewebsites.net/api/entities/Andrewusers/" + id;
+
+      let settings = {
+        headers: {
+          'SABIO-AUTH': 'U6YNWCSCC'
+        },
+        cache: 'false',
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        dataType: "Json", // how data is coming back
+        success: onSuccess, //this is a callback function
+        error: onError, // this is a callback function
+        type: "DELETE", // http method/verb
+
+      };
+      // this is the actual ajax call
+      $.ajax(url, settings);
+    };
+    
+    sabio.page.UpdateUser = (id, data, onSuccess, onError) => {
+      var url = "http://sabioapi2.azurewebsites.net/api/entities/Andrewusers/" + id;
+
+      var settings = {
+        headers: {
+          'SABIO-AUTH': 'U6YNWCSCC'
+        },
+        cache: 'false',
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        data: data,
+        dataType: "Json", // how data is coming back
+        success: onSuccess, //this is a callback function
+        error: onError, // this is a callback function
+        type: "PUT", // http method/verb
+
+      };
+      // this is the actual ajax call
+      $.ajax(url, settings);
+    }; 
+    
+    
+   
+    //********************* Call Back ********************//
+    sabio.page.onSuccess = (data) => {
+      console.log(data);
+      console.log("Data Confirm");
+      
+    };
+
+    sabio.page.onGetSuccess = (data) => {
+      sabio.page.loopThroughUsers(data.items);
+    };
+
+    sabio.page.onError = (textStatus) => {
+      console.log(textStatus);
+      console.log("Too Bad!! Error! :(");
+    };
+
+    sabio.page.editUserById = (data) => {
+      $("#inputFN").val(data.item.firstName);
+      $("#inputMI").val(data.item.middleIni);
+      $("#inputLN").val(data.item.lastName);
+      $("#inputEmail").val(data.item.Email);
+      $("#inputPW").val(data.item.PassWord);
+      $("#inputConfirmPW").val(data.item.ConPassWord);
+      $("#inputDOB").val(data.item.Birthday);
+      $("#inputPhone").val(data.item.Phone);
+      //$("#admin").val(data.item.inputPW);  
+    };
+    
+    sabio.page.deleteById = (data)=>{
+      sabio.page.userPostTemp.remove();
+      sabio.page.currentUser = null;
+    };
+
+    //****************************** Validation *******************************//
+    
+    sabio.page.initializeValidation = () => {
+      console.log("validation is ready")
+      
+      jQuery.validator.setDefaults({
+        debug: true
+      });
+      
+      let validationRules = {
+        "first": {
+        required: true,
+        minlength: 2,
+        maxlength: 50
+        },
+        "last": {
+        required: true,
+        minlength: 2,
+        maxlength: 50
+        },
+        "email": {
+        required: true
+        },
+        "password": {
+        required: true,
+        minlength: 3,
+        maxlength: 15
+        },
+        "password1": {
+        required: true,
+        minlength: 3,
+        maxlength: 15,
+        equalTo: "#inputPW"
+        },
+        'dob': {
+        required: true
+        }
+      };
+      
+      let validationMessages = {
+        "first": {
+        required: "Field cannot be empty."
+        },
+        "last": {
+        required: "Field cannot be empty."
+        },
+        "email": {
+        required: "Field requires an email"
+        },
+        "password": {
+        required: "I need a valid password."
+        },
+        "password1": {
+        required: "I need a valid password."
+        },
+        "dob": {
+        required: "What's your birth date?"
+        }
+      };  
+      
+      let validationOptions = {
+        rules: validationRules,
+        messages: validationMessages
+      };
+      
+      $("#newForm").validate(validationOptions);
+      
+    };
+    
+  </script>
+
+
+</body>
+
+</html>
+
+
+
+
+  <!------ Template ------>
+
+  <script type="text/template" id="template">
+
+   <div class="user card col-md-8">
+    <div class="card-block>
+    
+    <p><span class="card-title">User</span><p>
+
+    <p class="card-text">Name: <span class="name white-text"></span></p>
+
+    <p class="card-text">User Name: <span class="userName white-text"></span></p>
+
+    <p class="card-text">Phone #: <span class="phoneNumber white-text"></span></p>
+
+    <p class="card-text">Date of Birth: <span class="dateOfBirth white-text"></span></p>
+
+    <p class="card-text">Password: <span class="revPassword white-text"></span></p>
+      
+    <button id="cmdEdit" class="btn btn-warning">Edit</button>
+    <button id="cmdDelete" class="btn btn-danger">Delete</button>
+    </div>
+   </div>
+
+
+  </script>
+
+
+
+
+
+
+

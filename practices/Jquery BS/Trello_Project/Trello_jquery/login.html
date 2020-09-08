@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css'>
+
+
+    <title>Login</title>
+
+    <!-- STYLESHEETS -->
+    <!-- css / materialized website -->
+    <!-- http://next.materializecss.com/getting-started.html -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+    <style>
+        body {
+            background: url('img/christmas-dark/christmas-dark.png');
+            min-height: 100%;
+            background-size: fixed;
+        }
+
+        .container {
+            margin: auto;
+            width: 40%;
+            margin-top: 45px;
+        }
+
+        .cmdLogin {
+            margin: auto;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <form class='loginForm'>
+        <div class="container">
+            <div class="card formCard">
+                <div class="card-content black-text">
+                    <h3 class="loginPage teal-text center">Login</h3>
+
+                    <div class="row">
+                        <div class="input-field col s5">
+                            <input id="email" name='email' type="text" placeholder="Email Address">
+                            <label for="email"></label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s5">
+                            <input id="password" name='password' type="password" placeholder="Password">
+                            <label for="password"></label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <button class="btn waves-effect waves-light cmdLogin" type="submit" name="action">Login
+                            <i class="material-icons left">all_inclusive</i>
+                            <i class="material-icons right">all_inclusive</i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+
+
+    <script type="text/javascript">
+        sabio.page.startUp = () => {
+            $(".cmdLogin").on('click', sabio.page.handlers.LoginBtn);
+            console.log("its ready")
+
+        };
+
+        /***** Handler *****/
+        sabio.page.handlers.LoginBtn = (event) => {
+            event.preventDefault();
+            let data = sabio.page.userLogin();
+            sabio.page.PostLogin(data, sabio.page.onSuccess, sabio.page.onError);
+            sabio.page.ClearForm();
+        };
+
+
+        /***** Other *****/
+        sabio.page.ClearForm = () => {
+            $(".loginForm")[0].reset();
+        };
+
+        sabio.page.userLogin = () => {
+            let Login = {
+                email: $('#email').val(),
+                password: $('#password').val()
+            }
+            return Login;
+        };
+
+
+        /***** Ajax *****/
+        sabio.page.PostLogin = (data, onSuccess, onError) => {
+            let url = "https://pacoima-ypi.azurewebsites.net/api/users/login/force";
+
+            let settings = {
+                cache: false,
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                data: data,
+                dataType: "json",
+                type: "POST",
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: onSuccess,
+                error: onError
+            };
+
+            $.ajax(url, settings);
+        };
+
+
+        /***** Call Back *****/
+        sabio.page.onSuccess = (data) => {
+            console.log(data);
+            console.log("Data Confirm");
+            window.location.replace("HomePage.html");
+        };
+
+        sabio.page.onError = (textStatus) => {
+            console.log(textStatus);
+            console.log("Too Bad!! Error! :(");
+            alert("Access Denied Mother f*****");
+        };
+    </script>
+
+</body>
+
+</html>

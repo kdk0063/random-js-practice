@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+</head>
+
+<body>
+<form class="multiply col-md-6 col-sm-12">
+  <h1>Multiplication Chart </h1>
+    <div id="multiChart"
+         class="form-group">
+        <label> Multiplication Chart </label>
+        <input type="number"
+               class="form-control"
+               id="multiValue"
+               placeholder="Factor Number">
+    </div>
+
+    <input type="button"
+           value="Multiply"
+           class="btnMulti btn btn-success">
+</form>
+
+<form class="results col-sm-12">
+<h1> Multiplication Chart </h1>
+  <div class="multiChart">
+    <div id="userNumber">
+    </div>
+
+
+  </div>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+                      <!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+<script type="text/javascript">
+
+
+sabio.page.startUp = function() {
+$(".btnMulti").on("click", sabio.page.handlers.btnMulti);
+
+}
+
+sabio.page.handlers.btnMulti = function (){
+  var y = sabio.page.userValue();
+  sabio.page.multiplechart(y.userinput);
+  $(".multiply")[0].reset();
+};
+
+sabio.page.userValue = function(){
+  var userVal = {
+    userinput: $("#multiValue").val()
+  };
+  return userVal;
+};
+
+sabio.page.multiplechart = function(userinput){
+  var z = userinput;
+  for(var i = 0; i <= 10; i++){
+    $("#userNumber").append(z + " x " + i + " = " + (z*i) + "</br>")
+  };
+
+};
+
+
+
+
+</script>
+
+
+<script type="text/template" id="delete">
+
+<div class="deleteBTN">
+<input type="button"
+       value="Clear"
+       class="btnMulti btn btn-danger">
+<div class="form-group">
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Javascript Understanding # 2</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <h1>Question 2 </h1>
+            <p> what is the value of alice and charlie when you run printIt(alice, charlie);</p>
+            <p> why is it that value? or what is the function doing to give it those values </p>
+
+        </div>
+
+        <pre>
+
+                var alice = 'alice';
+                var bob = 'bob';
+                var charlie = 'charlie';
+
+                alice = charlie;
+                bob = 'doug';
+
+                function printIt(bob, alice) {
+                    console.log(alice);
+                    console.log(bob);
+                    console.log(charlie);
+                }
+
+                printIt(alice, charlie);
+
+
+        </pre>
+        <hr/>
+
+
+
+        <div>
+            <p> <strong> write your answer here:</strong>
+
+
+value of alice and charlie if printIT(alice, charlie)
+is both charlie
+
+becuase when var alice was declared at first it had string value "alice"
+
+but later on var alice was assigned new value which was var charlie which contained string value "charlie"
+
+
+
+
+
+            </p>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>

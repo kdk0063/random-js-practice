@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Practice Template</title>
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div class="form-group">
+      <div>
+          <button type="button" id="cloneBtn" class="btn btn-success cmdCloned">Add to List</button>
+      </div>
+  </div>
+
+  <div class="row listings">
+      <div class="col-sm-6">
+      </div>
+  </div>
+
+  <div class="form-group">
+      <div>
+        <button type="button" class="btn btn-danger cmdRemove">Remove Duplicate</button>
+      </div>
+  </div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+
+<!-- All your code goes below here-->
+
+<script type="text/javascript">
+sabio.page.startUp = function(){
+$().on("click", sabio.page.handlers.btnDuplicate)
+$().on("click", sabio.page.handlers.btnRemove)
+
+}
+
+
+
+
+/* first exercise
+var numList = []
+for(i = 0; i < 11; i++){
+  numList[i] = i+1;
+}
+
+numList.push(20);
+numList.unshift(0);
+numList.splice(5,1);
+numList.splice(7,1);
+
+for (i = 0; i < numList.length; i++){
+  console.log(numList[i]);
+}
+*/
+
+
+
+/*
+var people=
+[
+  {
+    "age": 24,
+    "name": "Jerry Hale",
+    "company": "PHOTOBIN",
+    "email": "jerryhale@photobin.com",
+    "phone": "+1 (980) 445-3351"
+  },
+  {
+    "age": 31,
+    "name": "Monique Dixon",
+    "company": "COMSTRUCT",
+    "email": "moniquedixon@comstruct.com",
+    "phone": "+1 (872) 497-3167"
+  },
+  {
+    "age": 37,
+    "name": "Joan Mccullough",
+    "company": "XYQAG",
+    "email": "joanmccullough@xyqag.com",
+    "phone": "+1 (933) 421-2529"
+  },
+  {
+    "age": 33,
+    "name": "Jacobs Mayer",
+    "company": "ISONUS",
+    "email": "jacobsmayer@isonus.com",
+    "phone": "+1 (818) 413-3992"
+  },
+  {
+    "age": 39,
+    "name": "Rosa Chandler",
+    "company": "SNACKTION",
+    "email": "rosachandler@snacktion.com",
+    "phone": "+1 (935) 474-2761"
+  },
+  {
+    "age": 26,
+    "name": "Crawford Mason",
+    "company": "NURPLEX",
+    "email": "crawfordmason@nurplex.com",
+    "phone": "+1 (890) 444-3896"
+  },
+  {
+    "age": 38,
+    "name": "Haney Carr",
+    "company": "KYAGORO",
+    "email": "haneycarr@kyagoro.com",
+    "phone": "+1 (920) 483-2898"
+  }
+]
+*/
+
+
+</script>
+
+
+<body>
+</html>

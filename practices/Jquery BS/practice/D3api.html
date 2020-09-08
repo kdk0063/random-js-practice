@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <!-- STYLESHEETS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <style>
+    body,
+    html {
+      background: url('img/background.png');
+      min-height: 150vh;
+    }
+
+    h3 {
+      text-align: center;
+      color: darkred;
+
+    }
+  </style>
+
+  <title>User Form</title>
+</head>
+
+<body>
+
+  <div class="container valign-wrapper">
+    <div class="row">
+      <div class="card formCard">
+        <div class="card-content">
+          <h3 class="userInfoName">Diablo 3 Data</h3>
+          <br>
+          <div class="row">
+            <form class="col s12" id="userForm">
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="battle_tag" name='battle_Tag' type="text" placeholder="Battle Tag">
+                  <label for="Battle Tag"></label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="locale" name='locale' type="text" placeholder="Server">
+                  <label for="Server"></label>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+        <div class="card-action">
+          <div class="row">
+            <div class="col s12">
+              <button id="btnSubmit" class="btn waves-effect waves-light">D3 Profile
+              <i class="left material-icons">person</i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container s10">
+      <div class="row marginMe">
+
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <!-- SCRIPTS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+  <script src="http://sabioapi2.azurewebsites.net/scripts/sabio.js"></script>
+
+
+  <!-- OUR JS -->
+
+  <script>
+    $(document).ready(function() {
+      console.log("let's go!");
+      $("#btnSubmit").on("click", getDiablo);
+    });
+    
+  
+
+    /****************************** HANDLERS *******************************/
+    let getDiablo = (e) => {
+      e.preventDefault();
+      let user = formData();
+      getDataFromApi(user, onGetSuccess, onError);
+      console.log("you just clicked")
+    }
+    
+    
+
+    /****************************** Objects *******************************/
+
+    var formData = () => {
+      let userInput = {
+        BattleTag: $('#battle_tag').val(),
+        Server: $('#locale').val()
+      }
+      return userInput;
+    };
+
+
+    /****************************** Template *******************************/
+    let loadTemplate = () => {
+      let temp = $($('#template').html());
+
+      return temp;
+    };
+
+  
+    /****************************** Loops *******************************/
+
+    /*
+    let loopThroughUsers = (users) => {
+      for (let i = 0; i < users; i++) {
+        writeToTemplate(users[i]);
+        console.log("getting it");
+      }
+    }
+    */
+    
+
+
+    /****************************** Callbacks *******************************/
+
+    let onGetSuccess = (data) => {
+      //loopThroughUsers(data);
+       let temp = loadTemplate();
+
+      temp.find('.BattleTag').text(data.battleTag);
+      temp.find('.GuildName').text(data.guildName);
+      temp.find('.PLS').text(data.paragonLevelSeason);
+      //temp.attr('id', data.id);
+
+      $('.marginMe').append(temp);
+      
+    }
+
+    let onError = (textStatus) => {
+      console.log(textStatus);
+      console.log("Oops..something went wrong :(");
+    };
+    
+    
+    /****************************** AJAX *******************************/
+
+    let getDataFromApi = (user, onSuccess, onError) => {
+      let url = 'https://us.api.battle.net/d3/profile/' + user.BattleTag + '/?locale=' + user.Server + '&apikey=8tbu52p39bpvfgbkgwzhssnq2w576qhe';
+
+      let settings = {
+        cache: false,
+        contentType: " application/x-www-form-urlencoded",
+        dataType: "json",
+        success: onSuccess,
+        error: onError,
+        type: "GET"
+      }
+
+      $.ajax(url, settings)
+    }
+  </script>
+
+
+
+  <!---  Template --->
+
+  <script type="text/template" id="template">
+    <div class="col s8">
+
+      <div class="card grey">
+
+        <div class="card-content white-text">
+          <span class="card-title">User</span>
+
+          <p class="black-text">Battle Tag: <span class="BattleTag white-text"></span></p>
+
+          <p class="black-text">Guild Name: <span class="GuildName white-text"></span></p>
+
+          <p class="black-text">paragonLevelSeason: <span class="PLS white-text"></span></p>
+
+        </div>
+
+        <div class="card-action">
+        
+          <button class="btn waves-effect waves-light">Character Info</button>
+        </div>
+      </div>
+
+    </div>
+  </script>
+
+  <script type="text/template" id="charTemplate">
+  
+   <div class="col s4">
+   
+    <p class="black-text">Name: <span class="name white-text"></span></p>
+
+    <p class="black-text">Class: <span class="class white-text"></span></p>
+
+    <p class="black-text">Level: <span class="level white-text"></span></p>
+
+    <p class="black-text">Paragon Level: <span class="paragonLevel white-text"></span></p>
+
+  </div>
+
+  </script>
+
+
+
+
+
+
+
+</body>
+
+</html>
